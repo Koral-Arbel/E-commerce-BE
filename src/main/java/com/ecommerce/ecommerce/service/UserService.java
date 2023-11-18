@@ -1,13 +1,15 @@
 package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.model.CustomUser;
+import com.ecommerce.ecommerce.model.CustomUserResponse;
 
 public interface UserService {
-    void createUser(CustomUser customUser) throws Exception;
+    Long createUser(CustomUser customUser);
     CustomUser getCustomUserById(Long id);
-    void updateCustomUserById(Long id, CustomUser customUser);
+    void updateCustomUserById(Long userId, CustomUser customUser);
     void deleteCustomUserById(Long id);
 
-    boolean findUserByUsername(String username);
+    CustomUser findUserByUsername(String username);
     CustomUser findUserByEmail(String email);
+
 }

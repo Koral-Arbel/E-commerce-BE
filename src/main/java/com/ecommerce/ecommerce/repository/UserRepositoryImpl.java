@@ -8,30 +8,35 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository{
-    private static final String USER_TABLE_NAME = "user";
+public class UserRepositoryImpl implements UserRepository {
+    private static final String USER_TABLE_NAME = "custom_user";
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
     @Override
-    public void createUser(CustomUser customUser) {
+    public Long createUser(CustomUser customUser) {
         String sql = "INSERT INTO " + USER_TABLE_NAME + " (first_name, last_name, email, phone, full_address, username, password, roles, permissions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql,customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), customUser.getRoles(), customUser.getPermissions());
+        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), customUser.getRoles(), customUser.getPermissions());
+        return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID();", Long.class);
     }
+
 
     @Override
     public CustomUser getCustomUserById(Long id) {
+        UserMapper userMapper = new UserMapper();
         String sql = "SELECT * FROM " + USER_TABLE_NAME + " WHERE id=?";
         try {
             return jdbcTemplate.queryForObject(sql, new UserMapper(), id);
-        } catch (EmptyResultDataAccessException error) {
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("Empty Data Warning");
             return null;
         }
     }
 
     @Override
-    public void updateCustomUserById(Long id, CustomUser customUser) {
+    public void updateCustomUserById(Long userId, CustomUser customUser) {
         String sql = "UPDATE " + USER_TABLE_NAME + " SET first_name=?, last_name=?, email=?, phone=?, full_address=?, username=?, password=?, roles=?, permissions=? " + "WHERE id=?";
-        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), customUser.getRoles(), customUser.getPermissions(), id);
+        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), customUser.getRoles(), customUser.getPermissions(), customUser.getId());
     }
 
     @Override
@@ -41,24 +46,22 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public boolean findUserByUsername(String username) {
+    public CustomUser findUserByUsername(String username) {
         String sql = "SELECT * FROM " + USER_TABLE_NAME + " WHERE username=?";
         try {
-            jdbcTemplate.queryForObject(sql, new UserMapper(), username);
+            return jdbcTemplate.queryForObject(sql, new UserMapper(), username);
         } catch (EmptyResultDataAccessException error) {
-            return true;
+            return null;
         }
-        return false;
     }
 
     @Override
-    public boolean findUserByEmail(String email) {
+    public CustomUser findUserByEmail(String email) {
         String sql = "SELECT * FROM " + USER_TABLE_NAME + " WHERE email=?";
         try {
-            jdbcTemplate.queryForObject(sql, new UserMapper(), email);
+            return jdbcTemplate.queryForObject(sql, new UserMapper(), email);
         } catch (EmptyResultDataAccessException error) {
-            return true;
+            return null;
         }
-        return false;
     }
 }

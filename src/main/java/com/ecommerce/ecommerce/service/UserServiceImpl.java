@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public void createUser(CustomUser customUser) throws Exception {
+    public Long createUser(CustomUser customUser) {
         String email = customUser.getEmail();
-        if (userRepository.findUserByEmail(email) == false) {
+        if (userRepository.findUserByEmail(email) != null) {
             throw new IllegalArgumentException("Email is already registered.");
         }
         CustomUser user = new CustomUser(
@@ -28,31 +28,36 @@ public class UserServiceImpl implements UserService{
                 customUser.getRoles(),
                 customUser.getPermissions()
         );
-      userRepository.createUser(customUser);
+        return userRepository.createUser(customUser);
     }
 
     @Override
     public CustomUser getCustomUserById(Long id) {
-        return null;
+        return userRepository.getCustomUserById(id);
     }
 
     @Override
-    public void updateCustomUserById(Long id, CustomUser customUser) {
-
+    public void updateCustomUserById(Long userId, CustomUser customUser) {
+        if (customUser != null) {
+            userRepository.updateCustomUserById(userId, customUser);
+        } else {
+            System.out.println("Unable to update");
+        }
+        userRepository.updateCustomUserById(userId, customUser);
     }
 
     @Override
     public void deleteCustomUserById(Long id) {
-
+        deleteCustomUserById(id);
     }
 
     @Override
-    public boolean findUserByUsername(String username) {
-            return userRepository.findUserByUsername(username);
-        }
+    public CustomUser findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
 
     @Override
     public CustomUser findUserByEmail(String email) {
-        return null;
+        return userRepository.findUserByEmail(email);
     }
 }
