@@ -5,14 +5,14 @@ public class Item {
     private String title;
     private Double price;
     private String photo;
-    private Long quantity;
+    private Long availableStock;
 
-    public Item(Long id, String title, Double price, String photo, Long quantity) {
+    public Item(Long id, String title, Double price, String photo, Long availableStock) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.photo = photo;
-        this.quantity = quantity;
+        this.availableStock = availableStock;
     }
 
     public Long getId() {
@@ -31,8 +31,8 @@ public class Item {
         return photo;
     }
 
-    public Long getQuantity() {
-        return quantity;
+    public Long getAvailableStock() {
+        return availableStock;
     }
 
     public void setId(Long id) {
@@ -51,7 +51,7 @@ public class Item {
         this.photo = photo;
     }
 
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
+    public void setAvailableStock(Long availableStock) {
+        this.availableStock = availableStock;
     }
 }

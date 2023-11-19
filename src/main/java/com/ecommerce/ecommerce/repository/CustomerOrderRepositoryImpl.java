@@ -11,14 +11,14 @@ import java.util.List;
 
 @Repository
 public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
-    private static final String CUSTOMER_ORDER_TABLE_NAME = "customer_order";
+    private static final String CUSTOM_ORDER_TABLE_NAME = "custom_order";
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private CustomerOrderMapper customerOrderMapper;
     @Override
     public Long createCustomerOrder(CustomerOrder customerOrder) {
-        String sql = "INSERT INTO " + CUSTOMER_ORDER_TABLE_NAME + " " + "(user_id, order_date, shipping_address, total_price, status) values (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + CUSTOM_ORDER_TABLE_NAME + " " + "(user_id, order_date, shipping_address, total_price, status) values (?, ?, ?, ?, ?)";
         jdbcTemplate.update(
                 sql,
                 customerOrder.getUserId(),
@@ -32,7 +32,7 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
 
     @Override
     public void updateCreateCustomerOrderById(Long id, CustomerOrder customerOrder) {
-        String sql = "UPDATE " + CUSTOMER_ORDER_TABLE_NAME + "SET user_id=?, order_date=?, shipping_address=?, total_price=?, status=? WHERE id=?";
+        String sql = "UPDATE " + CUSTOM_ORDER_TABLE_NAME + "SET user_id=?, order_date=?, shipping_address=?, total_price=?, status=? WHERE id=?";
         jdbcTemplate.update(
                 sql,
                 customerOrder.getUserId(),
@@ -46,13 +46,13 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
 
     @Override
     public void deleteCustomerOrderById(Long id) {
-        String sql = "DELETE FROM " + CUSTOMER_ORDER_TABLE_NAME + " WHERE id=?";
+        String sql = "DELETE FROM " + CUSTOM_ORDER_TABLE_NAME + " WHERE id=?";
         jdbcTemplate.update(sql, id);
     }
 
     @Override
     public CustomerOrder getCustomerOrderById(Long id) {
-        String sql = "SELECT * FROM " + CUSTOMER_ORDER_TABLE_NAME + " WHERE status = ?";
+        String sql = "SELECT * FROM " + CUSTOM_ORDER_TABLE_NAME + " WHERE status = ?";
         try {
             return jdbcTemplate.queryForObject(sql, customerOrderMapper, id);
         } catch (EmptyResultDataAccessException e) {
@@ -63,7 +63,7 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
 
     @Override
     public List<CustomerOrder> getAllCustomerByCustomerId(Long customerId) {
-        String sql = "SELECT * FROM " + CUSTOMER_ORDER_TABLE_NAME + " WHERE customer_id=?";
+        String sql = "SELECT * FROM " + CUSTOM_ORDER_TABLE_NAME + " WHERE customer_id=?";
         try{
             return jdbcTemplate.query(sql, customerOrderMapper, customerId);
         } catch (EmptyResultDataAccessException e) {

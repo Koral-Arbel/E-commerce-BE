@@ -2,6 +2,7 @@ package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.model.CustomerOrder;
 import com.ecommerce.ecommerce.model.CustomerOrderRequest;
+import com.ecommerce.ecommerce.model.Item;
 import com.ecommerce.ecommerce.service.CustomerOrderService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/customerOrder")
 public class CustomerOrderController {
+
     @Autowired
     private CustomerOrderService customerOrderService;
 
     @PostMapping("/create")
-    public Long createCustomerOrder(@RequestBody CustomerOrder customerOrder) throws JsonProcessingException {
+    public Long createCustomerOrder(@RequestBody CustomerOrder customerOrder, @RequestBody Item item) throws JsonProcessingException {
         return customerOrderService.createCustomerOrder(customerOrder);
     }
 
