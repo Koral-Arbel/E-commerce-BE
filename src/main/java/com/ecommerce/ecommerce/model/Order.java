@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Order {
     private Long id;
@@ -9,6 +10,9 @@ public class Order {
     private String shippingAddress;
     private Double totalPrice;
     private OrderStatus status;
+
+    public Order() {
+    }
 
     public Order(Long id, Long userId, LocalDateTime orderDate, String shippingAddress, Double totalPrice, OrderStatus status) {
         this.id = id;

@@ -1,6 +1,6 @@
 package com.ecommerce.ecommerce.repository.mapper;
 
-import com.ecommerce.ecommerce.model.CustomerOrder;
+import com.ecommerce.ecommerce.model.Order;
 import com.ecommerce.ecommerce.model.OrderStatus;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -8,17 +8,16 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 @Component
-public class CustomerOrderMapper implements RowMapper<CustomerOrder> {
+public class OrderMapper implements RowMapper<Order> {
     @Override
-    public CustomerOrder mapRow(ResultSet rs, int rowNum) throws SQLException {
-        CustomerOrder customerOrder = new CustomerOrder(
+    public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Order order = new Order(
                 rs.getLong("id"),
                 rs.getLong("user_id"),
-                rs.getDate("order_date").toLocalDate(),
+                rs.getDate("order_date").toLocalDate().atStartOfDay(),
                 rs.getString("shipping_address"),
                 rs.getDouble("total_price"),
-                OrderStatus.valueOf(rs.getString("status"))
-        );
-        return customerOrder;
+                OrderStatus.valueOf(rs.getString("status")));
+        return order;
     }
 }

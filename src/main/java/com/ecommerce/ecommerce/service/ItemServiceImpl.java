@@ -13,8 +13,13 @@ public class ItemServiceImpl implements ItemService{
     ItemRepository itemRepository;
 
     @Override
-    public Long createItem(Item item) {
+    public Item createItem(Item item) {
         return itemRepository.createItem(item);
+    }
+
+    @Override
+    public void updateItemById(Item item) {
+        updateItemById(item);
     }
 
     @Override

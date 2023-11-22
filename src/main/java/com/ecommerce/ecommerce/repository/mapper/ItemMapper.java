@@ -12,9 +12,9 @@ public class ItemMapper implements RowMapper<Item> {
         return new Item(
                 rs.getLong("id"),
                 rs.getString("title"),
-                rs.getDouble("price"),
                 rs.getString("photo"),
-                rs.getLong("quantity")
+                rs.getDouble("price"),
+                rs.getInt("quantity")
         );
     }
 }

@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.model.CustomUser;
-import com.ecommerce.ecommerce.model.CustomUserResponse;
 
 public interface UserService {
     Long createUser(CustomUser customUser);

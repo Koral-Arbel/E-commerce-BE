@@ -3,15 +3,15 @@ package com.ecommerce.ecommerce.model;
 public class Item {
     private Long id;
     private String title;
-    private Double price;
     private String photo;
-    private Long availableStock;
+    private Double price;
+    private Integer availableStock;
 
-    public Item(Long id, String title, Double price, String photo, Long availableStock) {
+    public Item(Long id, String title, String photo, Double price, Integer availableStock) {
         this.id = id;
         this.title = title;
-        this.price = price;
         this.photo = photo;
+        this.price = price;
         this.availableStock = availableStock;
     }
 
@@ -22,16 +22,15 @@ public class Item {
     public String getTitle() {
         return title;
     }
+    public String getPhoto() {
+        return photo;
+    }
 
     public Double getPrice() {
         return price;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public Long getAvailableStock() {
+    public Integer getAvailableStock() {
         return availableStock;
     }
 
@@ -42,16 +41,15 @@ public class Item {
     public void setTitle(String title) {
         this.title = title;
     }
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public void setPrice(Double price) {
         this.price = price;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public void setAvailableStock(Long availableStock) {
+    public void setAvailableStock(Integer availableStock) {
         this.availableStock = availableStock;
     }
 }

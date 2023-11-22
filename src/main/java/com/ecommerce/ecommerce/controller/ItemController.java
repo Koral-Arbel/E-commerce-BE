@@ -14,7 +14,7 @@ public class ItemController {
     ItemService itemService;
     @CrossOrigin
     @PostMapping(value = "/create")
-    public Long createItem(@RequestBody Item item){
+    public Item createItem(@RequestBody Item item){
         return itemService.createItem(item);
     }
 

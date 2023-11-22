@@ -5,7 +5,9 @@ import com.ecommerce.ecommerce.model.Item;
 import java.util.List;
 
 public interface ItemRepository {
-    Long createItem(Item item);
+    Item createItem(Item item);
+    void updateItemById(Item item);
+    void deleteItemById(Long id);
     Item getItemById(Long itemId);
     List<Item> getAllItems();
 }
