@@ -19,12 +19,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrderId(1L);
+        orderItem.setItemId(2L);
+        orderItem.setPrice(orderItem.getPrice());
+        orderItem.setQuantity(orderItem.getQuantity());
+        orderItem.setTotalPrice(orderItem.getTotalPrice());
+        orderItem.setOrderStatus(order.getStatus());
         if (!isUserRegistered(order.getUserId())) {
             throw new UserNotRegisteredException("User is not registered. Cannot create order.");
         }
         // המשתמש רשום, ניצור הזמנה
         return orderRepository.createOrder(order);
     }
+
 
     @Override
     public void updateOrderById(Order order) {

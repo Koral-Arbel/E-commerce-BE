@@ -1,19 +1,22 @@
 package com.ecommerce.ecommerce.model;
 
+import java.util.List;
+
 public class OrderItem {
     private Long id;
-    private Long userId;
+    private Long orderId;
     private Long itemId;
     private Double price;
     private int quantity;
     private Double totalPrice;
     private OrderStatus orderStatus;
 
-    public OrderItem() {}
+    public OrderItem() {
+    }
 
-    public OrderItem(Long id, Long itemId, Double price, int quantity, OrderStatus orderStatus) {
+    public OrderItem(Long id, Long orderId, Double price, int quantity, OrderStatus orderStatus) {
         this.id = id;
-        this.itemId = itemId;
+        this.orderId = 0L;
         this.price = price;
         this.quantity = quantity;
         this.totalPrice = price * quantity;
@@ -24,8 +27,8 @@ public class OrderItem {
         return id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getOrderId() {
+        return orderId;
     }
 
     public Long getItemId() {
@@ -52,8 +55,8 @@ public class OrderItem {
         this.id = id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public void setItemId(Long itemId) {
@@ -75,14 +78,8 @@ public class OrderItem {
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
-    public OrderItem toOrderItem() {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setId(id);
-        orderItem.setItemId(itemId);
-        orderItem.setPrice(price);
-        orderItem.setQuantity(quantity);
-        orderItem.setTotalPrice(totalPrice);
-        orderItem.setOrderStatus(orderStatus);
-        return orderItem;
+
+    public OrderItemResponse toOrderItemResponse(Item item, List<OrderItem> orderItems) {
+        return new OrderItemResponse(item, orderItems);
     }
 }
