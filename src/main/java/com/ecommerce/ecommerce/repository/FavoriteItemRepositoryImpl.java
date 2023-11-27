@@ -19,7 +19,7 @@ public class FavoriteItemRepositoryImpl implements FavoriteItemRepository {
 
     @Override
     public Long createItemAddToFavorites(FavoriteItem favoriteItem) {
-        String sql = "INSERT INTO " + FAVORITE_ITEM_TABLE_NAME + " (user_id, item_id) VALUES (?, ?)";
+        String sql = "INSERT INTO " + FAVORITE_ITEM_TABLE_NAME + " " + " (user_id, item_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, favoriteItem.getUserId(), favoriteItem.getItemId());
         return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID();", Long.class);
     }

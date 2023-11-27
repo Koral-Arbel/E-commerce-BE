@@ -18,7 +18,7 @@ public class ItemRepositoryImpl implements ItemRepository{
 
     @Override
     public Item createItem(Item item) {
-        String sql = "INSERT INTO " + ITEM_TABLE_NAME + " (title, photo, price, available_stock) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO " + ITEM_TABLE_NAME + " " + " (title, photo, price, available_stock) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, item.getTitle(),item.getPhoto(), item.getPrice(), item.getAvailableStock());
         jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID();", Long.class);
         return createItem(item);

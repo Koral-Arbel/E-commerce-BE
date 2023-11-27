@@ -3,26 +3,26 @@ package com.ecommerce.ecommerce.model;
 import java.util.List;
 
 public class OrderItemResponse {
-    private Item item;
+    private CustomUser customUser;
     private List<OrderItem> orderItems;
 
     public OrderItemResponse() {}
 
-    public OrderItemResponse( Item item, List<OrderItem> orderItems) {
-        this.item = item;
+    public OrderItemResponse(CustomUser customUser, List<OrderItem> orderItems) {
+        this.customUser = customUser;
         this.orderItems = orderItems;
     }
 
-    public Item getItem() {
-        return item;
+    public CustomUser getCustomUser() {
+        return customUser;
     }
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setCustomUser(CustomUser customUser) {
+        this.customUser = customUser;
     }
 
     public void setOrderItems(List<OrderItem> orderItems) {

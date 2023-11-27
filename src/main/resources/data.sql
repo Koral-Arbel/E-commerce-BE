@@ -6,24 +6,24 @@ DROP TABLE IF EXISTS order_item;
 
 CREATE TABLE custom_user (
     id INT(11) unsigned NOT NULL AUTO_INCREMENT,
-    first_name varchar(20) NOT NULL DEFAULT '',
-    last_name varchar(20) NOT NULL DEFAULT '',
-    email varchar(20) NOT NULL DEFAULT '',
-    phone varchar(20) NOT NULL DEFAULT '',
-    full_address varchar(255) NOT NULL DEFAULT '',
-    username varchar(20) NOT NULL DEFAULT '',
-    password varchar(20) NOT NULL DEFAULT '',
+    first_name VARCHAR(20) NOT NULL DEFAULT '',
+    last_name VARCHAR(20) NOT NULL DEFAULT '',
+    email VARCHAR(20) NOT NULL DEFAULT '',
+    phone VARCHAR(20) NOT NULL DEFAULT '',
+    full_address VARCHAR(255) NOT NULL DEFAULT '',
+    username VARCHAR(20) NOT NULL DEFAULT '',
+    password VARCHAR(20) NOT NULL DEFAULT '',
     active tinyint(1) NOT NULL DEFAULT '1',
-    roles varchar(200) NOT NULL DEFAULT '',
-    permissions varchar(200) NOT NULL DEFAULT '',
+    roles VARCHAR(200) NOT NULL DEFAULT '',
+    permissions VARCHAR(200) NOT NULL DEFAULT '',
     PRIMARY KEY (id)
 );
 
 CREATE TABLE orders (
     id INT(11) unsigned NOT NULL AUTO_INCREMENT,
-    user_id INT(11) NOT NULL DEFAULT '',
+    user_id INT(11) NOT NULL,
     order_date DATE DEFAULT CURRENT_DATE,
-    shipping_address varchar(255) NOT NULL DEFAULT '',
+    shipping_address VARCHAR(255) NOT NULL DEFAULT '',
     total_price DOUBLE NOT NULL DEFAULT 0,
     status varchar NOT NULL DEFAULT 'TEMP',
     PRIMARY KEY (id),
@@ -42,8 +42,8 @@ CREATE TABLE item (
 
 CREATE TABLE favorite_item (
     id INT(11) unsigned NOT NULL AUTO_INCREMENT,
-    user_id INT(11) NOT NULL DEFAULT '',
-    item_id INT(11) NOT NULL DEFAULT '',
+    user_id INT(11) NOT NULL,
+    item_id INT(11) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES custom_user(id),
     FOREIGN KEY (item_id) REFERENCES item(id)
@@ -52,12 +52,9 @@ CREATE TABLE favorite_item (
 
 CREATE TABLE order_item (
      id INT(11) unsigned NOT NULL AUTO_INCREMENT,
-     order_id INT(11) NOT NULL DEFAULT '',
-     item_id INT(11) NOT NULL DEFAULT '',
-     price DOUBLE NOT NULL DEFAULT 0,
-     quantity INT(11) NOT NULL DEFAULT '',
-     total_price DOUBLE NOT NULL DEFAULT 0,
-     status varchar NOT NULL DEFAULT 'TEMP',
+     order_id INT(11) NOT NULL,
+     item_id INT(11) NOT NULL,
+     quantity INT(11) NOT NULL,
      PRIMARY KEY (id),
      FOREIGN KEY (order_id) REFERENCES orders(id),
      FOREIGN KEY (item_id) REFERENCES item(id)

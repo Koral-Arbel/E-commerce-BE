@@ -19,18 +19,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
+        Order createdOrder = orderRepository.createOrder(order);
         OrderItem orderItem = new OrderItem();
-        orderItem.setOrderId(1L);
+        orderItem.setOrderId(createdOrder.getId());  // כאן אני משתמש במזהה של הזמנה החדשה
         orderItem.setItemId(2L);
-        orderItem.setPrice(orderItem.getPrice());
-        orderItem.setQuantity(orderItem.getQuantity());
-        orderItem.setTotalPrice(orderItem.getTotalPrice());
-        orderItem.setOrderStatus(order.getStatus());
+        orderItem.setPrice(25.0);
+        orderItem.setQuantity(2);
+        orderItem.setTotalPrice(orderItem.getPrice() * orderItem.getQuantity());
         if (!isUserRegistered(order.getUserId())) {
             throw new UserNotRegisteredException("User is not registered. Cannot create order.");
         }
+
         // המשתמש רשום, ניצור הזמנה
-        return orderRepository.createOrder(order);
+        orderRepository.createOrder(order);
+
+        return order;
+
     }
 
 

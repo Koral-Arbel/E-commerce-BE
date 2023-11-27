@@ -2,13 +2,12 @@ package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.model.*;
 import com.ecommerce.ecommerce.repository.OrderItemRepository;
-import com.ecommerce.ecommerce.repository.ItemRepository;
-import com.ecommerce.ecommerce.repository.UserRepository;
+import com.ecommerce.ecommerce.repository.OrderRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,78 +15,35 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Autowired
     OrderItemRepository orderItemRepository;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
     @Autowired
-    ItemService itemService;
+    OrderItemService orderItemService;
     @Autowired
-    ItemRepository itemRepository;
-
+    OrderRepository orderRepository;
     @Override
-    public OrderItemResponse createOrderItem(OrderItemRequest orderItemRequest) throws JsonProcessingException {
-        Item selectedItem = orderItemRequest.getItem();
-        Long createdOrderItemId = selectedItem.getId();
+    public OrderItemResponse createOrderItem(OrderItemRequest orderItemRequest) throws Exception {
+        CustomUser selectedCustomUser = orderItemRequest.getCustomUser();
+        CustomUser customerForResponse = null;
 
-        // Check if the product is already in the order
-        OrderItem existingOrderItem = orderItemRepository.getOrderItemById(selectedItem.getId());
-        if (existingOrderItem != null) {
-            throw new IllegalArgumentException("The product is already on order " + selectedItem.getId());
+        if (selectedCustomUser == null || selectedCustomUser.getId() == null) {
+            throw new Exception("Can't create customerOrder with invalid custom user");
         }
 
-        Long createdOrderId = orderItemRequest.toOrderItem().getId();
+        CustomUser existingCustomer = userService.getCustomUserById(selectedCustomUser.getId());
+        if (existingCustomer != null) {
+            // Create the order item
+            OrderItem orderItemToCreate = orderItemRequest.toOrderItem();
+            orderItemRepository.createOrderItem(orderItemToCreate);
 
-        if (createdOrderItemId == null) {
-            // If the item ID is null, create a new item
-            createdOrderItemId = itemService.createItem(selectedItem).getId();
+            customerForResponse = existingCustomer;
         } else {
-            // If the item ID is not null, check if the item exists
-            Item existingItem = itemService.getItemById(createdOrderItemId);
-            if (existingItem == null) {
-                throw new IllegalArgumentException("The product is already on order " + selectedItem.getId());
-            }
+            throw new Exception("Can't create customerOrder with non-existing customer id " + selectedCustomUser);
         }
-
-        // Get the updated item
-        selectedItem = itemService.getItemById(createdOrderItemId);
-        orderItemRequest.setItem(selectedItem);
-
-        // Create the order item
-        OrderItem orderItemToCreate = orderItemRequest.toOrderItem();
-        orderItemRepository.createOrderItem(orderItemToCreate);
-
-        // Retrieve the list of order items by order ID
-        List<OrderItem> orderItems = orderItemRepository.getAllItemsByOrderId(createdOrderId);
-
-        // Return the response
-        return orderItemToCreate.toOrderItemResponse(selectedItem, orderItems);
+        return null;
     }
-
-
-
-
     @Override
-    public OrderItemResponse updateCreateOrderItemById(OrderItemRequest orderItemRequest) {
-        Long orderItemId = orderItemRequest.getItemId(); // Assuming you have a method to get the order item ID from the request
-        OrderItem existingOrderItem = orderItemRepository.getOrderItemById(orderItemId);
-
-        // Check if the order item exists
-        if (existingOrderItem == null) {
-            throw new IllegalArgumentException("Order item with ID " + orderItemId + " not found.");
-        }
-
-        // Update the order item properties with the new values from the request
-        Item updatedItem = orderItemRequest.getItem();
-        existingOrderItem.setPrice(updatedItem.getPrice());
-        existingOrderItem.setQuantity(orderItemRequest.getQuantity());
-        // Update other properties as needed
-
-        // Save the updated order item back to the database
-        orderItemRepository.updateCreateOrderItemById(existingOrderItem);
-
-        // Retrieve the list of order items by order ID (assuming this method exists in your repository)
-        List<OrderItem> orderItems = orderItemRepository.getAllItemsByOrderId(existingOrderItem.getOrderId());
-
-        // You can return the updated order item response using the toOrderItemResponse method
-        return existingOrderItem.toOrderItemResponse(updatedItem, orderItems);
+    public void updateCreateOrderItemById(Long customerOrderId, OrderItem orderItem ) {
+        orderItemRepository.updateCreateOrderItemById(customerOrderId, orderItem);
     }
 
     @Override

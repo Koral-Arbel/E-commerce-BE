@@ -16,14 +16,14 @@ public class OrderItemController {
     private OrderItemService orderItemService;
 
     @PostMapping("/create")
-    public OrderItemResponse createOrderItem(@RequestBody OrderItemRequest orderItemRequest) throws JsonProcessingException {
+    public OrderItemResponse createOrderItem(@RequestBody OrderItemRequest orderItemRequest) throws Exception {
         return orderItemService.createOrderItem(orderItemRequest);
 
     }
 
     @PutMapping("/update")
-    public OrderItemResponse updateCreateOrderItemById(@RequestBody OrderItemRequest orderItemRequest) throws JsonProcessingException{
-        return orderItemService.updateCreateOrderItemById(orderItemRequest);
+    public void updateCreateOrderItemById(@PathVariable Long customerOrderId, @RequestBody OrderItem orderItem) {
+        orderItemService.updateCreateOrderItemById(customerOrderId, orderItem);
 }
 
     @DeleteMapping("/delete/{orderItemId}")

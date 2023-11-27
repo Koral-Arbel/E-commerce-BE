@@ -1,5 +1,7 @@
 package com.ecommerce.ecommerce.model;
 
+import java.util.List;
+
 public class Item {
     private Long id;
     private String title;

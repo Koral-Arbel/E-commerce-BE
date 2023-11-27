@@ -1,69 +1,47 @@
 package com.ecommerce.ecommerce.model;
 
 public class OrderItemRequest {
-    private Long itemId;
-    private int quantity;
-    private OrderStatus orderStatus;
-    private Item item;
-    private Order order;
+    private CustomUser customUser;
+    private OrderItem orderItem;
+
+    public OrderItemRequest(CustomUser customUser, OrderItem orderItem) {
+        this.customUser = customUser;
+        this.orderItem = orderItem;
+    }
+
     public OrderItemRequest(){}
 
-    public OrderItemRequest(Long itemId, int quantity, OrderStatus orderStatus, Item item, Order order) {
-        this.itemId = itemId;
-        this.quantity = quantity;
-        this.orderStatus = orderStatus;
-        this.item = item;
-        this.order = order;
+    public CustomUser getCustomUser() {
+        return customUser;
     }
 
-    public Long getItemId() {
-        return itemId;
+    public OrderItem getOrderItem() {
+        return orderItem;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public void setCustomUser(CustomUser customUser) {
+        this.customUser = customUser;
     }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderItem(OrderItem orderItem) {
+        this.orderItem = orderItem;
     }
 
     public OrderItem toOrderItem() {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setOrderId(orderItem.getOrderId());
-        orderItem.setItemId(itemId);
-        orderItem.setPrice(getItem().getPrice());
-        orderItem.setQuantity(quantity);
-        orderItem.setTotalPrice(toOrderItem().getTotalPrice());
-        orderItem.setOrderStatus(orderStatus);
-        return orderItem;
+        if (this.orderItem == null || this.customUser == null) {
+            System.out.println("Warning: orderItem or item is null. Returning a default OrderItem.");
+            return new OrderItem();
+
+        }
+
+        return new OrderItem(
+                this.orderItem.getId(),
+                this.customUser.getId(),
+                this.orderItem.getItemId(),
+                this.orderItem.getPrice(),
+                this.orderItem.getQuantity(),
+                this.orderItem.getTotalPrice(),
+                this.orderItem.getOrderStatus()
+        );
     }
 }

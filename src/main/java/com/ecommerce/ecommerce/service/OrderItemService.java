@@ -6,8 +6,8 @@ import com.ecommerce.ecommerce.model.OrderItemResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface OrderItemService {
-    OrderItemResponse createOrderItem(OrderItemRequest orderItemRequest) throws JsonProcessingException;
-    OrderItemResponse updateCreateOrderItemById(OrderItemRequest orderItemRequest);
+    OrderItemResponse createOrderItem(OrderItemRequest orderItemRequest) throws Exception;
+    void updateCreateOrderItemById(Long customerOrderId, OrderItem orderItem);
     void deleteOrderItemById(Long id);
     OrderItem getOrderItemById(Long id);
 }

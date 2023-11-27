@@ -10,18 +10,20 @@ public class OrderItem {
     private int quantity;
     private Double totalPrice;
     private OrderStatus orderStatus;
+    private Item item;
 
-    public OrderItem() {
-    }
+    public OrderItem() {}
 
-    public OrderItem(Long id, Long orderId, Double price, int quantity, OrderStatus orderStatus) {
+    public OrderItem(Long id, Long orderId, Long itemId, Double price, int quantity, Double totalPrice, OrderStatus orderStatus) {
         this.id = id;
-        this.orderId = 0L;
+        this.orderId = orderId;
+        this.itemId = itemId;
         this.price = price;
         this.quantity = quantity;
-        this.totalPrice = price * quantity;
+        this.totalPrice = totalPrice;
         this.orderStatus = orderStatus;
     }
+
 
     public Long getId() {
         return id;
@@ -79,7 +81,15 @@ public class OrderItem {
         this.orderStatus = orderStatus;
     }
 
-    public OrderItemResponse toOrderItemResponse(Item item, List<OrderItem> orderItems) {
-        return new OrderItemResponse(item, orderItems);
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public OrderItemResponse toOrderItemResponse(CustomUser customUser, List<OrderItem> orderItemList) {
+        return new OrderItemResponse(customUser, orderItemList);
     }
 }

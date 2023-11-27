@@ -15,7 +15,7 @@ public class OrderRepositoryImpl implements OrderRepository{
 
     @Override
     public Order createOrder(Order order) {
-        String sql = "INSERT INTO " + ORDER_TABLE_NAME + " (user_id, order_date, shipping_address, total_price, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + ORDER_TABLE_NAME + " " + " (user_id, order_date, shipping_address, total_price, status) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, order.getUserId(), order.getOrderDate(), order.getShippingAddress(), order.getTotalPrice(), order.getStatus());
         Long orderId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         order.setId(orderId);
@@ -54,7 +54,7 @@ public class OrderRepositoryImpl implements OrderRepository{
 
     @Override
     public Order getOrderByUserId(Long userId) {
-        String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE id=?";
+        String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE user_id=?";
         try {
             return jdbcTemplate.queryForObject(sql, new OrderMapper(), userId);
         } catch (EmptyResultDataAccessException exception) {
