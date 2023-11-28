@@ -3,12 +3,8 @@ package com.ecommerce.ecommerce.service;
 import com.ecommerce.ecommerce.model.*;
 import com.ecommerce.ecommerce.repository.OrderRepository;
 import com.ecommerce.ecommerce.repository.UserRepository;
-import com.ecommerce.ecommerce.utils.UserNotRegisteredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
-import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -20,7 +16,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Long createOrder(Order order) {
         return orderRepository.createOrder(order);
-
     }
 
 
@@ -47,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOpenOrderForUser(Long userId) {
+    public Long getOpenOrderForUser(Long userId) {
         return orderRepository.getOpenOrderForUser(userId);
     }
 }

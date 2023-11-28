@@ -9,5 +9,5 @@ public interface OrderService {
     void deleteOrderById(Long id);
     Order getOrderById(Long id);
     CustomUser getOrderByUserId(Long userId);
-    Order getOpenOrderForUser(Long userId);
+    Long getOpenOrderForUser(Long userId);
 }

@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.model.OrderItem;
+import com.ecommerce.ecommerce.model.OrderItemRequest;
 import com.ecommerce.ecommerce.model.OrderItemResponse;
 import com.ecommerce.ecommerce.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ public class OrderItemController {
     private OrderItemService orderItemService;
 
     @PostMapping("/create")
-    public OrderItemResponse createOrderItem(@RequestBody OrderItem orderItem) throws Exception {
-        return orderItemService.createOrderItem(orderItem);
+    public OrderItemResponse createOrderItem(@RequestBody OrderItemRequest orderItemRequest) throws Exception {
+        return orderItemService.createOrderItem(orderItemRequest);
     }
 
     @PutMapping("/update")

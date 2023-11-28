@@ -8,5 +8,5 @@ public interface OrderRepository {
     void deleteOrderById(Long id);
     Order getOrderById(Long id);
     Order getOrderByUserId(Long userId);
-    Order getOpenOrderForUser(Long userId);
+    Long getOpenOrderForUser(Long userId);
 }

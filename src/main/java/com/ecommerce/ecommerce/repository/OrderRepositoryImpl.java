@@ -15,10 +15,9 @@ public class OrderRepositoryImpl implements OrderRepository{
 
     @Override
     public Long createOrder(Order order) {
-        String sql = "INSERT INTO " + ORDER_TABLE_NAME + " " + " (user_id, order_date, shipping_address, total_price, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + ORDER_TABLE_NAME  + " (user_id, order_date, shipping_address, total_price, status) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, order.getUserId(), order.getOrderDate(), order.getShippingAddress(), order.getTotalPrice(), order.getStatus().name());
         return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
-
     }
 
     @Override
@@ -63,12 +62,12 @@ public class OrderRepositoryImpl implements OrderRepository{
     }
 
     @Override
-    public Order getOpenOrderForUser(Long userId) {
-        String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE user_id = ? AND status = 'TEMP'";
+    public Long getOpenOrderForUser(Long userId) {
+        String sql = "SELECT id FROM " + ORDER_TABLE_NAME + " WHERE user_id = ? AND status = 'TEMP'";
         try {
-            return jdbcTemplate.queryForObject(sql, new OrderMapper(), userId);
+            return jdbcTemplate.queryForObject(sql, Long.class, userId);
         } catch (EmptyResultDataAccessException e) {
-            return null; // אם אין הזמנה פתוחה, יוחזר null
+            return null; // If there is no open order, return null
         }
     }
 }

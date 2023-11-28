@@ -3,46 +3,63 @@ package com.ecommerce.ecommerce.service;
 import com.ecommerce.ecommerce.model.*;
 import com.ecommerce.ecommerce.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
     @Autowired
     OrderItemRepository orderItemRepository;
-    @Autowired
-    ItemService itemService;
-    @Autowired
+   @Autowired
     OrderService orderService;
+   @Autowired
+    ItemService itemService;
     @Override
-    public OrderItemResponse createOrderItem(OrderItem orderItem) throws Exception {
-        if (orderItem == null) {
-            throw new Exception("OrderItem is Null");
+    public OrderItemResponse createOrderItem(OrderItemRequest orderItemRequest) throws Exception {
+        if (orderItemRequest == null) {
+            throw new IllegalArgumentException("OrderItemRequest is null");
         }
-        Item itemInformation = itemService.getItemById(orderItem.getItemId());
+        // Retrieve item information
+        Item itemInformation = itemService.getItemById(orderItemRequest.getItemId());
         if (itemInformation == null) {
-            throw new Exception("Item with id " + orderItem.getItemId() + " Not found");
+            throw new NotFoundException("Item with id " + orderItemRequest.getItemId() + " not found");
         }
 
+        // Check item availability
         if (itemInformation.getAvailableStock() <= 0) {
-            throw new Exception("Item  is not available in stock");
+            throw new IllegalArgumentException("Item is not available in stock");
         }
 
-        Order openOrder = orderService.getOpenOrderForUser(orderItem.getUserId());
-        if (openOrder == null) {
+        Long orderId = orderService.getOpenOrderForUser(orderItemRequest.getUserId());
+
+        if (orderId == null) {
             LocalDateTime date = LocalDateTime.now();
-            Order newOrder = new Order(null, orderItem.getUserId(), date, null, null, OrderStatus.TEMP);
-            Long createOrderId = orderService.createOrder(newOrder);
-            orderItem.setOrderId(createOrderId);
-        } else {
-            orderItem.setOrderId(openOrder.getId());
+            Order newOrder = new Order(null, orderItemRequest.getUserId(), date, null, null, OrderStatus.TEMP);
+            orderId = orderService.createOrder(newOrder);
         }
 
+        Order openOrder = orderService.getOrderById(orderId);
+
+        // Create an order item
+        OrderItem orderItem = new OrderItem(null, orderItemRequest.getUserId(), openOrder.getId(),
+                orderItemRequest.getItemId(), itemInformation.getPrice(),
+                orderItemRequest.getQuantity());
+
+        // Update available stock and create the order item
         itemService.updateAvailableStock(itemInformation.getId(), itemInformation.getAvailableStock() - 1);
         orderItemRepository.createOrderItem(orderItem);
 
-        return null;
+        // Fetch the updated order items for the order
+        List<Item> orderItems = itemService.getItemsByOrderId(openOrder.getId());
+
+        // Create the response DTO
+        OrderItemResponse orderItemResponse = new OrderItemResponse(openOrder, orderItems);
+
+        // Return the response
+        return orderItemResponse;
     }
     @Override
     public void updateCreateOrderItemById(Long customerOrderId, OrderItem orderItem ) {

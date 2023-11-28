@@ -45,4 +45,9 @@ public class ItemServiceImpl implements ItemService{
             new Exception("request is empty");
         }
     }
+
+    @Override
+    public List<Item> getItemsByOrderId(Long orderId) {
+        return itemRepository.getItemsByOrderId(orderId);
+    }
 }
