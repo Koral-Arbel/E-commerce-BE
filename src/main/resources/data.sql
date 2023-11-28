@@ -52,10 +52,13 @@ CREATE TABLE favorite_item (
 
 CREATE TABLE order_item (
      id INT(11) unsigned NOT NULL AUTO_INCREMENT,
+     user_id INT(11) NOT NULL,
      order_id INT(11) NOT NULL,
      item_id INT(11) NOT NULL,
+     price DOUBLE NOT NULL DEFAULT 0,
      quantity INT(11) NOT NULL,
      PRIMARY KEY (id),
+     FOREIGN KEY (user_id) REFERENCES custom_user(id),
      FOREIGN KEY (order_id) REFERENCES orders(id),
      FOREIGN KEY (item_id) REFERENCES item(id)
 );

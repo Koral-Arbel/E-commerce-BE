@@ -31,4 +31,18 @@ public class ItemServiceImpl implements ItemService{
     public List<Item> getAllItems() {
         return itemRepository.getAllItems();
     }
+
+    @Override
+    public void updateAvailableStock(Long itemId, Integer availableStock) {
+        if (itemId != null){
+            Item getItemId = itemRepository.getItemById(itemId);
+            if(getItemId != null){
+                itemRepository.updateAvailableStock(itemId, availableStock);
+            }else {
+                new Exception(getItemId.getId() + "is not exist");
+            }
+        }else {
+            new Exception("request is empty");
+        }
+    }
 }

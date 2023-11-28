@@ -14,7 +14,7 @@ public class OrderMapper implements RowMapper<Order> {
         Order order = new Order(
                 rs.getLong("id"),
                 rs.getLong("user_id"),
-                rs.getDate("order_date").toLocalDate().atStartOfDay(),
+                rs.getTimestamp("order_date").toLocalDateTime(),
                 rs.getString("shipping_address"),
                 rs.getDouble("total_price"),
                 OrderStatus.valueOf(rs.getString("status")));

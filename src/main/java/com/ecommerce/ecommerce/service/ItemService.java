@@ -9,4 +9,6 @@ public interface ItemService {
     void updateItemById(Item item);
     Item getItemById(Long itemId);
     List<Item> getAllItems();
+
+    void updateAvailableStock(Long itemId, Integer availableStock);
 }

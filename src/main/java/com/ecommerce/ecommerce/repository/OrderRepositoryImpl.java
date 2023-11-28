@@ -14,12 +14,11 @@ public class OrderRepositoryImpl implements OrderRepository{
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Order createOrder(Order order) {
+    public Long createOrder(Order order) {
         String sql = "INSERT INTO " + ORDER_TABLE_NAME + " " + " (user_id, order_date, shipping_address, total_price, status) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, order.getUserId(), order.getOrderDate(), order.getShippingAddress(), order.getTotalPrice(), order.getStatus());
-        Long orderId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
-        order.setId(orderId);
-        return (order);
+        jdbcTemplate.update(sql, order.getUserId(), order.getOrderDate(), order.getShippingAddress(), order.getTotalPrice(), order.getStatus().name());
+        return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
+
     }
 
     @Override
@@ -31,7 +30,7 @@ public class OrderRepositoryImpl implements OrderRepository{
                 order.getOrderDate(),
                 order.getShippingAddress(),
                 order.getTotalPrice(),
-                order.getStatus(),
+                order.getStatus().name(),
                 order.getId());
     }
 
@@ -60,6 +59,16 @@ public class OrderRepositoryImpl implements OrderRepository{
         } catch (EmptyResultDataAccessException exception) {
             System.out.println("Warning: EmptyResultDataAccessException");
             return null;
+        }
+    }
+
+    @Override
+    public Order getOpenOrderForUser(Long userId) {
+        String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE user_id = ? AND status = 'TEMP'";
+        try {
+            return jdbcTemplate.queryForObject(sql, new OrderMapper(), userId);
+        } catch (EmptyResultDataAccessException e) {
+            return null; // אם אין הזמנה פתוחה, יוחזר null
         }
     }
 }

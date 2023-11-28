@@ -2,43 +2,46 @@ package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.model.*;
 import com.ecommerce.ecommerce.repository.OrderItemRepository;
-import com.ecommerce.ecommerce.repository.OrderRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
     @Autowired
     OrderItemRepository orderItemRepository;
     @Autowired
-    UserService userService;
+    ItemService itemService;
     @Autowired
-    OrderItemService orderItemService;
-    @Autowired
-    OrderRepository orderRepository;
+    OrderService orderService;
     @Override
-    public OrderItemResponse createOrderItem(OrderItemRequest orderItemRequest) throws Exception {
-        CustomUser selectedCustomUser = orderItemRequest.getCustomUser();
-        CustomUser customerForResponse = null;
-
-        if (selectedCustomUser == null || selectedCustomUser.getId() == null) {
-            throw new Exception("Can't create customerOrder with invalid custom user");
+    public OrderItemResponse createOrderItem(OrderItem orderItem) throws Exception {
+        if (orderItem == null) {
+            throw new Exception("OrderItem is Null");
+        }
+        Item itemInformation = itemService.getItemById(orderItem.getItemId());
+        if (itemInformation == null) {
+            throw new Exception("Item with id " + orderItem.getItemId() + " Not found");
         }
 
-        CustomUser existingCustomer = userService.getCustomUserById(selectedCustomUser.getId());
-        if (existingCustomer != null) {
-            // Create the order item
-            OrderItem orderItemToCreate = orderItemRequest.toOrderItem();
-            orderItemRepository.createOrderItem(orderItemToCreate);
+        if (itemInformation.getAvailableStock() <= 0) {
+            throw new Exception("Item  is not available in stock");
+        }
 
-            customerForResponse = existingCustomer;
+        Order openOrder = orderService.getOpenOrderForUser(orderItem.getUserId());
+        if (openOrder == null) {
+            LocalDateTime date = LocalDateTime.now();
+            Order newOrder = new Order(null, orderItem.getUserId(), date, null, null, OrderStatus.TEMP);
+            Long createOrderId = orderService.createOrder(newOrder);
+            orderItem.setOrderId(createOrderId);
         } else {
-            throw new Exception("Can't create customerOrder with non-existing customer id " + selectedCustomUser);
+            orderItem.setOrderId(openOrder.getId());
         }
+
+        itemService.updateAvailableStock(itemInformation.getId(), itemInformation.getAvailableStock() - 1);
+        orderItemRepository.createOrderItem(orderItem);
+
         return null;
     }
     @Override

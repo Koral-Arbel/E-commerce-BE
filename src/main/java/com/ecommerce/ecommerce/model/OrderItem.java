@@ -4,29 +4,29 @@ import java.util.List;
 
 public class OrderItem {
     private Long id;
+    private Long userId;
     private Long orderId;
     private Long itemId;
     private Double price;
     private int quantity;
-    private Double totalPrice;
-    private OrderStatus orderStatus;
-    private Item item;
-
     public OrderItem() {}
 
-    public OrderItem(Long id, Long orderId, Long itemId, Double price, int quantity, Double totalPrice, OrderStatus orderStatus) {
+    public OrderItem(Long id, Long userId, Long orderId, Long itemId, Double price, int quantity) {
         this.id = id;
+        this.userId = userId;
         this.orderId = orderId;
         this.itemId = itemId;
         this.price = price;
         this.quantity = quantity;
-        this.totalPrice = totalPrice;
-        this.orderStatus = orderStatus;
     }
 
 
     public Long getId() {
         return id;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     public Long getOrderId() {
@@ -44,17 +44,12 @@ public class OrderItem {
     public int getQuantity() {
         return quantity;
     }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setOrderId(Long orderId) {
@@ -73,23 +68,7 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public OrderItemResponse toOrderItemResponse(CustomUser customUser, List<OrderItem> orderItemList) {
-        return new OrderItemResponse(customUser, orderItemList);
+    public OrderItemResponse toOrderItemResponse(Order order, List<Item> items) {
+        return new OrderItemResponse(order, items);
     }
 }

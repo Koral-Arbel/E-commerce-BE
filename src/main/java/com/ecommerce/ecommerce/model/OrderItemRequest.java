@@ -1,47 +1,40 @@
 package com.ecommerce.ecommerce.model;
 
 public class OrderItemRequest {
-    private CustomUser customUser;
-    private OrderItem orderItem;
+    private Long userId;
+    private Long itemId;
+    private int quantity;
 
-    public OrderItemRequest(CustomUser customUser, OrderItem orderItem) {
-        this.customUser = customUser;
-        this.orderItem = orderItem;
+    public OrderItemRequest() {
     }
 
-    public OrderItemRequest(){}
-
-    public CustomUser getCustomUser() {
-        return customUser;
+    public OrderItemRequest(Long userId, Long itemId, int quantity) {
+        this.userId = userId;
+        this.itemId = itemId;
+        this.quantity = quantity;
     }
 
-    public OrderItem getOrderItem() {
-        return orderItem;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setCustomUser(CustomUser customUser) {
-        this.customUser = customUser;
+    public Long getItemId() {
+        return itemId;
     }
 
-    public void setOrderItem(OrderItem orderItem) {
-        this.orderItem = orderItem;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public OrderItem toOrderItem() {
-        if (this.orderItem == null || this.customUser == null) {
-            System.out.println("Warning: orderItem or item is null. Returning a default OrderItem.");
-            return new OrderItem();
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-        }
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
+    }
 
-        return new OrderItem(
-                this.orderItem.getId(),
-                this.customUser.getId(),
-                this.orderItem.getItemId(),
-                this.orderItem.getPrice(),
-                this.orderItem.getQuantity(),
-                this.orderItem.getTotalPrice(),
-                this.orderItem.getOrderStatus()
-        );
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

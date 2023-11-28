@@ -56,4 +56,10 @@ public class ItemRepositoryImpl implements ItemRepository{
             return null;
         }
     }
+
+    @Override
+    public void updateAvailableStock(Long itemId, Integer availableStock) {
+        String sql = "UPDATE " + ITEM_TABLE_NAME +" SET available_stock=? WHERE id=?";
+        jdbcTemplate.update(sql, itemId, availableStock);
+    }
 }

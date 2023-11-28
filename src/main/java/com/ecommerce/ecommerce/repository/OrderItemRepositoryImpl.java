@@ -22,27 +22,20 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     @Autowired
     OrderItemMapper orderItemMapper;
     @Override
-    public OrderItem createOrderItem(OrderItem orderItem) {
-        String sql = "INSERT INTO " + ORDER_ITEM_TABLE_NAME + " " + " (order_id, item_id, price, quantity, total_price, status) VALUES (?, ?, ?, ?, ?, ?)";
-        // Log the values for debugging
-        System.out.println("Inserting OrderItem: " + orderItem);
-        System.out.println("orderItem.getOrderId(): " + orderItem.getOrderId());
-        System.out.println("orderItem.getItemId(): " + orderItem.getItemId());
-        System.out.println("orderItem.getPrice(): " + orderItem.getPrice());
-        System.out.println("orderItem.getQuantity(): " + orderItem.getQuantity());
-        System.out.println("orderItem.getTotalPrice(): " + orderItem.getTotalPrice());
-        System.out.println("orderItem.getOrderStatus(): " + orderItem.getOrderStatus());
-        return createOrderItem(orderItem);
+    public Long createOrderItem(OrderItem orderItem) {
+        String sql = "INSERT INTO " + ORDER_ITEM_TABLE_NAME  + " (user_id, order_id, item_id, price, quantity) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, orderItem.getUserId(), orderItem.getOrderId() , orderItem.getItemId(), orderItem.getPrice(), orderItem.getQuantity());
+        return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID();", Long.class);
     }
 
     @Override
     public void updateCreateOrderItemById(Long orderId, OrderItem orderItem) {
-        String sql = "UPDATE " + ORDER_ITEM_TABLE_NAME + " SET order_id=?, item_id=?,  price=?, quantity=?, total_price=?, status=? " + " WHERE id=?";
-        jdbcTemplate.update(sql, orderItem.getOrderId(), orderItem.getItemId(), orderItem.getPrice(), orderItem.getQuantity(), orderItem.getTotalPrice(), orderItem.getOrderStatus(), orderItem.getId());
+        String sql = "UPDATE " + ORDER_ITEM_TABLE_NAME + " SET user_id=?, order_id=?, item_id=?, price=?, quantity=? " + " WHERE id=?";
+        jdbcTemplate.update(sql, orderItem.getUserId(), orderItem.getOrderId(), orderItem.getItemId(), orderItem.getPrice(), orderItem.getQuantity(), orderItem.getId());
     }
     @Override
     public OrderItem getOrderItemById(Long id) {
-        String sql = "SELECT * FROM " + ORDER_ITEM_TABLE_NAME + " WHERE order_id=?";
+        String sql = "SELECT * FROM " + ORDER_ITEM_TABLE_NAME + " WHERE id=?";
         try {
             return jdbcTemplate.queryForObject(sql, new OrderItemMapper(), id);
         } catch (EmptyResultDataAccessException exception) {
@@ -60,7 +53,7 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     @Override
     public List<OrderItem> getAllItemsByOrderId(Long id) {
         OrderItemMapper orderItemMapper = new OrderItemMapper();
-        String sql = "SELECT * FROM " + ORDER_ITEM_TABLE_NAME + " WHERE order_id=?";
+        String sql = "SELECT * FROM " + ORDER_ITEM_TABLE_NAME + " WHERE id=?";
         try {
             return jdbcTemplate.query(sql, orderItemMapper, id);
         } catch (EmptyResultDataAccessException e) {

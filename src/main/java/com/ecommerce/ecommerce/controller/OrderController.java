@@ -13,7 +13,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/create")
-    public Order createOrder(@RequestBody Order order) {
+    public Long createOrder(@RequestBody Order order) {
        return orderService.createOrder(order);
     }
 

@@ -10,4 +10,6 @@ public interface ItemRepository {
     void deleteItemById(Long id);
     Item getItemById(Long itemId);
     List<Item> getAllItems();
+
+    void updateAvailableStock(Long itemId, Integer availableStock);
 }

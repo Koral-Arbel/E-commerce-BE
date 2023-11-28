@@ -3,29 +3,40 @@ package com.ecommerce.ecommerce.model;
 import java.util.List;
 
 public class OrderItemResponse {
-    private CustomUser customUser;
-    private List<OrderItem> orderItems;
+    private Order order;
+    private List<Item> items;
 
     public OrderItemResponse() {}
 
-    public OrderItemResponse(CustomUser customUser, List<OrderItem> orderItems) {
-        this.customUser = customUser;
-        this.orderItems = orderItems;
+    public OrderItemResponse(Order order, List<Item> items) {
+        this.order = order;
+        this.items = items;
     }
 
-    public CustomUser getCustomUser() {
-        return customUser;
+    public Order getOrder() {
+        return order;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setCustomUser(CustomUser customUser) {
-        this.customUser = customUser;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public OrderItem toOrderItem(){
+        return new OrderItem(
+                this.order.getId(),
+                this.order.getUserId(),
+                this.order.getId(),
+                this.items.get(0).getId(),
+                this.items.get(0).getPrice() * this.items.size(),
+                this.items.size()
+                );
     }
 }
