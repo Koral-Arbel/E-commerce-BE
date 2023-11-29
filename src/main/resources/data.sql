@@ -24,7 +24,6 @@ CREATE TABLE orders (
     user_id INT(11) NOT NULL,
     order_date DATE DEFAULT CURRENT_DATE,
     shipping_address VARCHAR(255) NOT NULL DEFAULT '',
-    total_price DOUBLE NOT NULL DEFAULT 0,
     status varchar NOT NULL DEFAULT 'TEMP',
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES custom_user(id)

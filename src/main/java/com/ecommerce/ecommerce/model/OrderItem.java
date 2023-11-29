@@ -68,7 +68,7 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public OrderItemResponse toOrderItemResponse(Order order, List<Item> items) {
-        return new OrderItemResponse(order, items);
+    public OrderItemResponse toOrderItemResponse(Order order, List<Item> items, Double totalPrice) {
+        return new OrderItemResponse(order, items, totalPrice);
     }
 }

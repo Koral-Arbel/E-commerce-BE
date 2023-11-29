@@ -15,20 +15,19 @@ public class OrderRepositoryImpl implements OrderRepository{
 
     @Override
     public Long createOrder(Order order) {
-        String sql = "INSERT INTO " + ORDER_TABLE_NAME  + " (user_id, order_date, shipping_address, total_price, status) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, order.getUserId(), order.getOrderDate(), order.getShippingAddress(), order.getTotalPrice(), order.getStatus().name());
+        String sql = "INSERT INTO " + ORDER_TABLE_NAME  + " (user_id, order_date, shipping_address, status) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, order.getUserId(), order.getOrderDate(), order.getShippingAddress(), order.getStatus().name());
         return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
     }
 
     @Override
     public void updateOrderById(Order order) {
-        String sql = "UPDATE " + ORDER_TABLE_NAME + " SET user_id=?, order_date=?, shipping_address=?, total_price=?, status=?" +
+        String sql = "UPDATE " + ORDER_TABLE_NAME + " SET user_id=?, order_date=?, shipping_address=?, status=?" +
                 "WHERE id=?";
         jdbcTemplate.update(sql,
                 order.getUserId(),
                 order.getOrderDate(),
                 order.getShippingAddress(),
-                order.getTotalPrice(),
                 order.getStatus().name(),
                 order.getId());
     }

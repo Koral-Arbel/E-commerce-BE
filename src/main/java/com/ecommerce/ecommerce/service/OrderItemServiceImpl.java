@@ -22,6 +22,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         if (orderItemRequest == null) {
             throw new IllegalArgumentException("OrderItemRequest is null");
         }
+
         // Retrieve item information
         Item itemInformation = itemService.getItemById(orderItemRequest.getItemId());
         if (itemInformation == null) {
@@ -37,16 +38,21 @@ public class OrderItemServiceImpl implements OrderItemService {
 
         if (orderId == null) {
             LocalDateTime date = LocalDateTime.now();
-            Order newOrder = new Order(null, orderItemRequest.getUserId(), date, null, null, OrderStatus.TEMP);
+            Order newOrder = new Order(null, orderItemRequest.getUserId(), date, null, OrderStatus.TEMP);
             orderId = orderService.createOrder(newOrder);
         }
 
         Order openOrder = orderService.getOrderById(orderId);
 
         // Create an order item
-        OrderItem orderItem = new OrderItem(null, orderItemRequest.getUserId(), openOrder.getId(),
-                orderItemRequest.getItemId(), itemInformation.getPrice(),
-                orderItemRequest.getQuantity());
+        OrderItem orderItem = new OrderItem(
+                null,
+                orderItemRequest.getUserId(),
+                openOrder.getId(),
+                orderItemRequest.getItemId(),
+                itemInformation.getPrice(),
+                orderItemRequest.getQuantity()
+        );
 
         // Update available stock and create the order item
         itemService.updateAvailableStock(itemInformation.getId(), itemInformation.getAvailableStock() - 1);
@@ -55,10 +61,11 @@ public class OrderItemServiceImpl implements OrderItemService {
         // Fetch the updated order items for the order
         List<Item> orderItems = itemService.getItemsByOrderId(openOrder.getId());
 
-        // Create the response DTO
-        OrderItemResponse orderItemResponse = new OrderItemResponse(openOrder, orderItems);
+        // Calculate total price dynamically
+        Double totalPrice = itemInformation.getPrice() * orderItemRequest.getQuantity();
 
-        // Return the response
+        // Create the response DTO
+        OrderItemResponse orderItemResponse = new OrderItemResponse(openOrder, orderItems, totalPrice);
         return orderItemResponse;
     }
     @Override
