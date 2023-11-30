@@ -8,7 +8,8 @@ public class OrderItemResponse {
     private Double totalPrice;
 
 
-    public OrderItemResponse() {}
+    public OrderItemResponse() {
+    }
 
     public OrderItemResponse(Order order, List<Item> items, Double totalPrice) {
         this.order = order;
@@ -40,20 +41,31 @@ public class OrderItemResponse {
         this.totalPrice = totalPrice;
     }
 
-    public OrderItem toOrderItem(){
+    public OrderItem toOrderItem() {
         return new OrderItem(
                 this.order.getId(),
                 this.order.getUserId(),
                 this.order.getId(),
                 this.items.get(0).getId(),
                 this.items.get(0).getPrice() * this.items.size(),
-                this.items.size()
-                );
+                this.items.get(0).getQuantity()
+        );
+    }
+
+
+    public int calculateTotalQuantity() {
+        if (items != null) {
+            return items.stream().mapToInt(Item::getQuantity).sum();
+        }
+        return 0;
     }
 
     public void calculateTotalPrice() {
         if (items != null && !items.isEmpty()) {
-            this.totalPrice = items.get(0).getPrice() * items.size();
+            this.totalPrice = items.stream()
+                    .mapToDouble(item -> item.getPrice() * item.getQuantity())
+                    .sum();
         }
     }
+
 }

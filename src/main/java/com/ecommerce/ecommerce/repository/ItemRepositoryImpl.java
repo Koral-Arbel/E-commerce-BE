@@ -19,17 +19,18 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public Item createItem(Item item) {
-        String sql = "INSERT INTO " + ITEM_TABLE_NAME + " " + " (title, photo, price, available_stock) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, item.getTitle(), item.getPhoto(), item.getPrice(), item.getAvailableStock());
-        jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID();", Long.class);
-        return createItem(item);
+        String sql = "INSERT INTO " + ITEM_TABLE_NAME + " (title, photo, price, quantity, available_stock) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, item.getTitle(), item.getPhoto(), item.getPrice(),item.getQuantity(), item.getAvailableStock());
+        Long generatedId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID();", Long.class);
+        item.setId(generatedId);
+        return item;
     }
 
     @Override
     public void updateItemById(Item item) {
-        String sql = "UPDATE " + ITEM_TABLE_NAME + "SET title=?, photo=?, price=?, available_stock=? WHERE id=?";
+        String sql = "UPDATE " + ITEM_TABLE_NAME + " SET title=?, photo=?, price=?, quantity=?, available_stock=? WHERE id=?";
         jdbcTemplate.update(
-                sql, item.getTitle(), item.getPhoto(), item.getPrice(), item.getAvailableStock(), item.getId());
+                sql, item.getTitle(), item.getPhoto(), item.getPrice(),item.getQuantity(), item.getAvailableStock(), item.getId());
     }
 
     @Override
@@ -39,11 +40,13 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Item getItemById(Long itemId) {
+    public Item getItemById(Long id) {
+        ItemMapper itemMapper = new ItemMapper();
         String sql = "SELECT * FROM " + ITEM_TABLE_NAME + " WHERE id=?";
         try {
-            return jdbcTemplate.queryForObject(sql, new ItemMapper(), itemId);
-        } catch (EmptyResultDataAccessException error) {
+            return jdbcTemplate.queryForObject(sql, new ItemMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("Empty Data Warning");
             return null;
         }
     }
@@ -61,12 +64,12 @@ public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public void updateAvailableStock(Long itemId, Integer availableStock) {
         String sql = "UPDATE " + ITEM_TABLE_NAME + " SET available_stock=? WHERE id=?";
-        jdbcTemplate.update(sql, itemId, availableStock);
+        jdbcTemplate.update(sql, availableStock, itemId);
     }
 
     @Override
     public List<Item> getItemsByOrderId(Long orderId) {
-        String sql = "SELECT i.id, i.title, i.photo, i.price, i.available_stock FROM order_item oi JOIN item i ON oi.item_id = i.id WHERE oi.order_id=?";
+        String sql = " SELECT i.* FROM " + ORDER_ITEM_TABLE_NAME + " oi JOIN " + ITEM_TABLE_NAME + " i ON oi.item_id = i.id " + " WHERE oi.order_id=?";
         try {
             return jdbcTemplate.query(sql, new ItemMapper(), orderId);
         } catch (EmptyResultDataAccessException error) {

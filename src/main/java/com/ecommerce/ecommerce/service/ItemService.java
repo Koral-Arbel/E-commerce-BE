@@ -13,4 +13,5 @@ public interface ItemService {
     void updateAvailableStock(Long itemId, Integer availableStock);
 
     List<Item> getItemsByOrderId(Long orderId);
+
 }

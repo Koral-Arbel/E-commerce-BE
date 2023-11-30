@@ -44,22 +44,21 @@ public class OrderItemServiceImpl implements OrderItemService {
 
         Order openOrder = orderService.getOrderById(orderId);
 
-        // Create an order item
         OrderItem orderItem = new OrderItem(
                 null,
                 orderItemRequest.getUserId(),
-                openOrder.getId(),
+                orderId,  // השתמש ב orderId שקיבלת
                 orderItemRequest.getItemId(),
                 itemInformation.getPrice(),
                 orderItemRequest.getQuantity()
         );
 
-        // Update available stock and create the order item
+// עדכון זמינות המוצר ויצירת הזמנה פריט
         itemService.updateAvailableStock(itemInformation.getId(), itemInformation.getAvailableStock() - 1);
         orderItemRepository.createOrderItem(orderItem);
 
-        // Fetch the updated order items for the order
-        List<Item> orderItems = itemService.getItemsByOrderId(openOrder.getId());
+// קריאה ל- getItemsByOrderId לאחר שהזמנה כבר נכנסה לטבלת order_item
+        List<Item> orderItems = itemService.getItemsByOrderId(orderId);
 
         // Calculate total price dynamically
         Double totalPrice = itemInformation.getPrice() * orderItemRequest.getQuantity();

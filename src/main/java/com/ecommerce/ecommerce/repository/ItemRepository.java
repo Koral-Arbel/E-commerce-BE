@@ -8,10 +8,11 @@ public interface ItemRepository {
     Item createItem(Item item);
     void updateItemById(Item item);
     void deleteItemById(Long id);
-    Item getItemById(Long itemId);
+    Item getItemById(Long id);
     List<Item> getAllItems();
 
     void updateAvailableStock(Long itemId, Integer availableStock);
 
     List<Item> getItemsByOrderId(Long orderId);
+
 }

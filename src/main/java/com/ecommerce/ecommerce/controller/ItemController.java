@@ -17,6 +17,10 @@ public class ItemController {
     public Item createItem(@RequestBody Item item){
         return itemService.createItem(item);
     }
+    @PutMapping("/update")
+    public void updateItem(@RequestBody Item item){
+        itemService.updateItemById(item);
+    }
 
     @GetMapping(value = "/{itemId}")
     public Item getItemById(@PathVariable Long itemId){
