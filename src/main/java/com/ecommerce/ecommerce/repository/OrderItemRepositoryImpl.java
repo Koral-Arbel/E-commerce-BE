@@ -34,10 +34,10 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
         jdbcTemplate.update(sql, orderItem.getUserId(), orderItem.getOrderId(), orderItem.getItemId(), orderItem.getPrice(), orderItem.getQuantity(), orderItem.getId());
     }
     @Override
-    public OrderItem getOrderItemById(Long id) {
+    public OrderItem getOrderItemByOrderId(Long orderId) {
         String sql = "SELECT * FROM " + ORDER_ITEM_TABLE_NAME + " WHERE id=?";
         try {
-            return jdbcTemplate.queryForObject(sql, new OrderItemMapper(), id);
+            return jdbcTemplate.queryForObject(sql, new OrderItemMapper(), orderId);
         } catch (EmptyResultDataAccessException exception) {
             System.out.println("Warning: EmptyResultDataAccessException");
             return null;

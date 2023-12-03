@@ -7,7 +7,6 @@ import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -31,7 +30,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
 
         // Check item availability
-        if (itemInformation.getAvailableStock() <= 0) {
+        if (itemInformation.getAvailableStock() == 0) {
             throw new IllegalArgumentException("Item is not available in stock");
         }
 
@@ -46,21 +45,28 @@ public class OrderItemServiceImpl implements OrderItemService {
 
         Order openOrder = orderService.getOrderById(orderId);
 
+        // Check if the item already exists in the order
+        List<Item> orderItems = itemService.getItemsByOrderId(orderId);
+        if (isItemAlreadyInOrder(orderItems, orderItemRequest.getItemId())) {
+            throw new IllegalArgumentException("Item is already in the order");
+        }
+
         OrderItem orderItem = new OrderItem(
                 null,
                 orderItemRequest.getUserId(),
-                orderId,  // השתמש ב orderId שקיבלת
+                orderId,
                 orderItemRequest.getItemId(),
                 itemInformation.getPrice(),
                 orderItemRequest.getQuantity()
         );
 
-// עדכון זמינות המוצר ויצירת הזמנה פריט
+        // Update item availability and create the order item
         itemService.updateAvailableStock(itemInformation.getId(), itemInformation.getAvailableStock() - 1);
         orderItemRepository.createOrderItem(orderItem);
+        orderService.updateOrderById(openOrder);
 
-// קריאה ל- getItemsByOrderId לאחר שהזמנה כבר נכנסה לטבלת order_item
-        List<Item> orderItems = itemService.getItemsByOrderId(orderId);
+        // Retrieve updated order items
+        orderItems = itemService.getItemsByOrderId(orderId);
 
         // Calculate total price dynamically
         Double totalPrice = itemInformation.getPrice() * orderItemRequest.getQuantity();
@@ -82,11 +88,16 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public OrderItem getOrderItemById(Long id) {
-        return orderItemRepository.getOrderItemById(id);
+        return orderItemRepository.getOrderItemByOrderId(id);
     }
 
     @Override
     public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
-        return null;
+        return orderItemRepository.getAllItemsByOrderId(orderId);
+    }
+
+
+    private boolean isItemAlreadyInOrder(List<Item> orderItems, Long itemId) {
+        return orderItems.stream().anyMatch(item -> item.getId().equals(itemId));
     }
 }

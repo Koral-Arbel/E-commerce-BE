@@ -70,4 +70,12 @@ public class OrderDto {
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
+
+    private Float totalOrderItems(List<OrderItem> items){
+        float totalSum=0;
+        for(OrderItem item:items){
+            totalSum+=item.getPrice();
+        }
+        return totalSum;
+    }
 }
