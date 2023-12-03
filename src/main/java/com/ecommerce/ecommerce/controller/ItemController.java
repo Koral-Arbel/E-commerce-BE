@@ -18,7 +18,7 @@ public class ItemController {
         return itemService.createItem(item);
     }
     @PutMapping("/update")
-    public void updateItem(@RequestBody Item item){
+    public void updateItemById(@RequestBody Item item){
         itemService.updateItemById(item);
     }
 
@@ -31,5 +31,10 @@ public class ItemController {
     @GetMapping(value = "/all")
     public List<Item> getAllItems(){
         return itemService.getAllItems();
+    }
+
+    @GetMapping(value = "/getItemByOrderId/{orderId}")
+    public List<Item> getItemsByOrderId(@PathVariable Long orderId){
+        return itemService.getItemsByOrderId(orderId);
     }
 }

@@ -62,4 +62,10 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
 
         }
     }
+
+    @Override
+    public void processPayment(Long orderId) {
+        String updateQuery = "UPDATE orders SET status = 'CLOSE' WHERE id = ?";
+        jdbcTemplate.update(updateQuery, orderId);
+    }
 }

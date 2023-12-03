@@ -7,6 +7,7 @@ import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -40,6 +41,7 @@ public class OrderItemServiceImpl implements OrderItemService {
             LocalDateTime date = LocalDateTime.now();
             Order newOrder = new Order(null, orderItemRequest.getUserId(), date, null, OrderStatus.TEMP);
             orderId = orderService.createOrder(newOrder);
+
         }
 
         Order openOrder = orderService.getOrderById(orderId);
@@ -81,5 +83,10 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItem getOrderItemById(Long id) {
         return orderItemRepository.getOrderItemById(id);
+    }
+
+    @Override
+    public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
+        return null;
     }
 }

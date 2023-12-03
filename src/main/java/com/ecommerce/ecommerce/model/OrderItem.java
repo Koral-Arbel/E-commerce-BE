@@ -68,6 +68,10 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
+    public Double calculateSubtotal() {
+        return getPrice() * getQuantity();
+    }
+
     public OrderItemResponse toOrderItemResponse(Order order, List<Item> items, Double totalPrice) {
         return new OrderItemResponse(order, items, totalPrice);
     }

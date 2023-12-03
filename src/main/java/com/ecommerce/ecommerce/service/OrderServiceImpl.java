@@ -20,25 +20,33 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Long createOrder(Order order) {
-        return orderRepository.createOrder(order);
+        CustomUser user = getOrderByUserId(order.getUserId());
+        if (user == null) {
+            throw new IllegalArgumentException("You must register first");
+        }
+        Long existingOpenOrderId = getOpenOrderForUser(order.getUserId());
+        if (existingOpenOrderId != null) {
+            throw new IllegalStateException("The user already has an open order in TEMP status");
+        }
+        Long orderId = orderRepository.createOrder(order);
+        return orderId;
     }
 
 
     @Override
     public void updateOrderById(Order order) {
-        updateOrderById(order);
-    }
-
-
-    @Override
-    public void deleteOrderById(Long id) {
-        orderRepository.deleteOrderById(id);
-
+        orderRepository.updateOrderById(order);
     }
 
     @Override
-    public Order getOrderById(Long id) {
-        return orderRepository.getOrderById(id);
+    public void deleteOrderById(Long orderId) {
+        orderRepository.deleteOrderById(orderId);
+
+    }
+
+    @Override
+    public Order getOrderById(Long orderId) {
+        return orderRepository.getOrderById(orderId);
     }
 
     @Override
@@ -52,13 +60,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Integer calculateTotalQuantity() {
-        List<Item> items = itemRepository.getAllItems();
-        int totalQuantity = 0;
-        for (Item item : items) {
-            totalQuantity += item.getQuantity();
-        }
-        return totalQuantity;
+    public void processPayment(Long orderId) {
+        Order order = orderRepository.getOrderById(orderId);
+        order.setStatus(OrderStatus.CLOSE);
+        orderRepository.updateOrderById(order);
     }
 
     @Override

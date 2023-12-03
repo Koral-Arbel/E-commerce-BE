@@ -11,4 +11,6 @@ public interface OrderItemRepository {
     OrderItem getOrderItemById(Long id);
     List<OrderItem> getAllItemsByOrderId(Long id);
 
+    void processPayment(Long orderId);
+
 }

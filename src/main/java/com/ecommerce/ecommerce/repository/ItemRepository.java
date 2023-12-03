@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.Item;
+import com.ecommerce.ecommerce.model.ItemDto;
 
 import java.util.List;
 

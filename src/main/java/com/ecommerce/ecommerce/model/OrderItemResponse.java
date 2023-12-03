@@ -5,16 +5,16 @@ import java.util.List;
 public class OrderItemResponse {
     private Order order;
     private List<Item> items;
-    private Double totalPrice;
+    private Double itemPrice;
 
 
     public OrderItemResponse() {
     }
 
-    public OrderItemResponse(Order order, List<Item> items, Double totalPrice) {
+    public OrderItemResponse(Order order, List<Item> items, Double itemPrice) {
         this.order = order;
         this.items = items;
-        this.totalPrice = totalPrice;
+        this.itemPrice = itemPrice;
     }
 
     public Order getOrder() {
@@ -25,8 +25,8 @@ public class OrderItemResponse {
         return items;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
+    public Double getItemPrice() {
+        return itemPrice;
     }
 
     public void setOrder(Order order) {
@@ -37,8 +37,8 @@ public class OrderItemResponse {
         this.items = items;
     }
 
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setItemPrice(Double itemPrice) {
+        this.itemPrice = itemPrice;
     }
 
     public OrderItem toOrderItem() {
@@ -47,25 +47,8 @@ public class OrderItemResponse {
                 this.order.getUserId(),
                 this.order.getId(),
                 this.items.get(0).getId(),
-                this.items.get(0).getPrice() * this.items.size(),
-                this.items.get(0).getQuantity()
+                this.items.get(0).getPrice() * toOrderItem().getQuantity(),
+                this.items.size()
         );
     }
-
-
-    public int calculateTotalQuantity() {
-        if (items != null) {
-            return items.stream().mapToInt(Item::getQuantity).sum();
-        }
-        return 0;
-    }
-
-    public void calculateTotalPrice() {
-        if (items != null && !items.isEmpty()) {
-            this.totalPrice = items.stream()
-                    .mapToDouble(item -> item.getPrice() * item.getQuantity())
-                    .sum();
-        }
-    }
-
 }

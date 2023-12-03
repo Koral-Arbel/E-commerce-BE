@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.Item;
+import com.ecommerce.ecommerce.model.ItemDto;
 import com.ecommerce.ecommerce.repository.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -19,8 +20,8 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public Item createItem(Item item) {
-        String sql = "INSERT INTO " + ITEM_TABLE_NAME + " (title, photo, price, quantity, available_stock) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, item.getTitle(), item.getPhoto(), item.getPrice(),item.getQuantity(), item.getAvailableStock());
+        String sql = "INSERT INTO " + ITEM_TABLE_NAME + " (title, photo, price, available_stock) VALUES ( ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, item.getTitle(), item.getPhoto(), item.getPrice(), item.getAvailableStock());
         Long generatedId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID();", Long.class);
         item.setId(generatedId);
         return item;
@@ -28,9 +29,9 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public void updateItemById(Item item) {
-        String sql = "UPDATE " + ITEM_TABLE_NAME + " SET title=?, photo=?, price=?, quantity=?, available_stock=? WHERE id=?";
+        String sql = "UPDATE " + ITEM_TABLE_NAME + " SET title=?, photo=?, price=?, available_stock=? WHERE id=?";
         jdbcTemplate.update(
-                sql, item.getTitle(), item.getPhoto(), item.getPrice(),item.getQuantity(), item.getAvailableStock(), item.getId());
+                sql, item.getTitle(), item.getPhoto(), item.getPrice(), item.getAvailableStock(), item.getId());
     }
 
     @Override

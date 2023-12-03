@@ -6,8 +6,7 @@ public class OrderItemRequest {
     private Integer quantity;
     private String shippingAddress;
 
-    public OrderItemRequest() {
-    }
+    public OrderItemRequest() {}
 
     public OrderItemRequest(Long userId, Long itemId, Integer quantity, String shippingAddress) {
         this.userId = userId;

@@ -1,17 +1,19 @@
 package com.ecommerce.ecommerce.model;
 
-public class Item {
+public class ItemDto {
     private Long id;
     private String title;
     private String photo;
     private Double price;
+    private Integer quantity = 0;
     private Integer availableStock;
 
-    public Item(Long id, String title, String photo, Double price, Integer availableStock) {
+    public ItemDto(Long id, String title, String photo, Double price, Integer quantity, Integer availableStock) {
         this.id = id;
         this.title = title;
         this.photo = photo;
         this.price = price;
+        this.quantity = quantity;
         this.availableStock = availableStock;
     }
 
@@ -28,6 +30,10 @@ public class Item {
 
     public Double getPrice() {
         return price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public Integer getAvailableStock() {
@@ -48,7 +54,22 @@ public class Item {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     public void setAvailableStock(Integer availableStock) {
         this.availableStock = availableStock;
+    }
+
+    public Item toItem(){
+        return new Item(
+                this.getId(),
+                this.getTitle(),
+                this.getPhoto(),
+                this.getPrice(),
+                getQuantity()
+        );
     }
 }

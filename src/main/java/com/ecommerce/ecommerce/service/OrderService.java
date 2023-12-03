@@ -1,20 +1,14 @@
 package com.ecommerce.ecommerce.service;
 
-import com.ecommerce.ecommerce.model.CustomUser;
-import com.ecommerce.ecommerce.model.Item;
-import com.ecommerce.ecommerce.model.Order;
-
-import java.util.List;
+import com.ecommerce.ecommerce.model.*;
 
 public interface OrderService {
     Long createOrder(Order order);
     void updateOrderById(Order order);
-    void deleteOrderById(Long id);
-    Order getOrderById(Long id);
+    void deleteOrderById(Long orderId);
+    Order getOrderById(Long orderId);
     CustomUser getOrderByUserId(Long userId);
     Long getOpenOrderForUser(Long userId);
-
-    Integer calculateTotalQuantity();
-
+    void processPayment(Long orderId);
     void handleOutOfStockItem(Item existingItem);
 }

@@ -3,22 +3,24 @@ package com.ecommerce.ecommerce.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Order {
+public class OrderDto {
     private Long id;
     private Long userId;
     private LocalDateTime orderDate;
     private String shippingAddress;
     private OrderStatus status;
+    List<OrderItem> orderItems;
 
-    public Order() {
+    public OrderDto() {
     }
 
-    public Order(Long id, Long userId, LocalDateTime orderDate, String shippingAddress, OrderStatus status) {
+    public OrderDto(Long id, Long userId, LocalDateTime orderDate, String shippingAddress, OrderStatus status, List<OrderItem> orderItems) {
         this.id = id;
         this.userId = userId;
         this.orderDate = orderDate;
         this.shippingAddress = shippingAddress;
         this.status = status;
+        this.orderItems = orderItems;
     }
 
     public Long getId() {
@@ -40,6 +42,10 @@ public class Order {
     public OrderStatus getStatus() {
         return status;
     }
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -61,13 +67,7 @@ public class Order {
         this.status = status;
     }
 
-    private Double calculateTotalPrice(List<OrderItem> orderItems) {
-        double totalPrice = 0.0;
-
-        for (OrderItem orderItem : orderItems) {
-            totalPrice += orderItem.calculateSubtotal();
-        }
-
-        return totalPrice;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }
