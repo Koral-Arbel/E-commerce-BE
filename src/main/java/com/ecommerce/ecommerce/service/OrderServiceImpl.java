@@ -77,6 +77,11 @@ public class OrderServiceImpl implements OrderService {
             throw new IllegalArgumentException("Existing item is null");
         }
     }
+
+    @Override
+    public Double calculateTotalPrice(Order order) {
+        return calculateTotalPrice(order);
+    }
 }
 
 

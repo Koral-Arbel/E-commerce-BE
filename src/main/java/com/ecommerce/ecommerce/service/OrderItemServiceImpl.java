@@ -69,7 +69,12 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItems = itemService.getItemsByOrderId(orderId);
 
         // Calculate total price dynamically
-        Double totalPrice = itemInformation.getPrice() * orderItemRequest.getQuantity();
+        Double totalPrice = orderItems.stream()
+                .mapToDouble(item -> item.getPrice() * orderItem.getQuantity())
+                .sum();
+
+        // Update the response DTO with the total price
+        orderItem.calculateSubtotal();
 
         // Create the response DTO
         OrderItemResponse orderItemResponse = new OrderItemResponse(openOrder, orderItems, totalPrice);

@@ -62,12 +62,6 @@ public class Order {
     }
 
     private Double calculateTotalPrice(List<OrderItem> orderItems) {
-        double totalPrice = 0.0;
-
-        for (OrderItem orderItem : orderItems) {
-            totalPrice += orderItem.calculateSubtotal();
-        }
-
-        return totalPrice;
+      return orderItems.stream().mapToDouble(orderItem -> orderItem.getPrice() * orderItem.getQuantity()).sum();
     }
 }

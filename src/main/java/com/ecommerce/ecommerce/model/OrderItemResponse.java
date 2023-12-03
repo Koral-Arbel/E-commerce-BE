@@ -5,16 +5,16 @@ import java.util.List;
 public class OrderItemResponse {
     private Order order;
     private List<Item> items;
-    private Double itemPrice;
+    private Double totalPrice;
 
 
     public OrderItemResponse() {
     }
 
-    public OrderItemResponse(Order order, List<Item> items, Double itemPrice) {
+    public OrderItemResponse(Order order, List<Item> items, Double totalPrice) {
         this.order = order;
         this.items = items;
-        this.itemPrice = itemPrice;
+        this.totalPrice = totalPrice;
     }
 
     public Order getOrder() {
@@ -25,8 +25,8 @@ public class OrderItemResponse {
         return items;
     }
 
-    public Double getItemPrice() {
-        return itemPrice;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
     public void setOrder(Order order) {
@@ -37,8 +37,8 @@ public class OrderItemResponse {
         this.items = items;
     }
 
-    public void setItemPrice(Double itemPrice) {
-        this.itemPrice = itemPrice;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public OrderItem toOrderItem() {

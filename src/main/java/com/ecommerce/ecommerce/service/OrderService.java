@@ -11,4 +11,5 @@ public interface OrderService {
     Long getOpenOrderForUser(Long userId);
     void processPayment(Long orderId);
     void handleOutOfStockItem(Item existingItem);
+    Double calculateTotalPrice(Order order);
 }
