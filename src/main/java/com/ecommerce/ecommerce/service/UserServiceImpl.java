@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.model.CustomUser;
+import com.ecommerce.ecommerce.model.CustomUserRequest;
 import com.ecommerce.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class UserServiceImpl implements UserService {
                 customUser.getFullAddress(),
                 customUser.getUsername(),
                 customUser.getPassword(),
-                customUser.getRoles(),
-                customUser.getPermissions()
+                null,
+                null
         );
         return userRepository.createUser(customUser);
     }
@@ -59,5 +60,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public CustomUser findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public void createUserJwt(CustomUserRequest customUserRequest) throws Exception {
+        CustomUser existingCustomUser = userRepository.findUserByUsername(customUserRequest.getUsername());
+        if(existingCustomUser != null){
+            throw new Exception("Username " + customUserRequest.getUsername() + " is already taken");
+        }
+        userRepository.createUser(customUserRequest.toCustomUser());
     }
 }

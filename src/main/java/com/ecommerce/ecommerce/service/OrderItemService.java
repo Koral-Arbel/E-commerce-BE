@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface OrderItemService {
     OrderItemResponse createOrderItem(OrderItemRequest orderItemRequest) throws Exception;
-    void updateCreateOrderItemById(Long customerOrderId, OrderItem orderItem);
+    void updateOrderItemById(Long customerOrderId, OrderItem orderItem);
     void deleteOrderItemById(Long id);
     OrderItem getOrderItemById(Long id);
-    List<OrderItem> getOrderItemsByOrderId(Long orderId);
+    List<OrderItem> getAllItemsByOrderId(Long orderId);
 }

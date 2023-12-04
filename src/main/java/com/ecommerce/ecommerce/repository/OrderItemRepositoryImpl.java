@@ -29,12 +29,12 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     }
 
     @Override
-    public void updateCreateOrderItemById(Long orderId, OrderItem orderItem) {
+    public void updateOrderItemById(Long orderId, OrderItem orderItem) {
         String sql = "UPDATE " + ORDER_ITEM_TABLE_NAME + " SET user_id=?, order_id=?, item_id=?, price=?, quantity=? " + " WHERE id=?";
         jdbcTemplate.update(sql, orderItem.getUserId(), orderItem.getOrderId(), orderItem.getItemId(), orderItem.getPrice(), orderItem.getQuantity(), orderItem.getId());
     }
     @Override
-    public OrderItem getOrderItemByOrderId(Long orderId) {
+    public OrderItem getOrderItemById(Long orderId) {
         String sql = "SELECT * FROM " + ORDER_ITEM_TABLE_NAME + " WHERE id=?";
         try {
             return jdbcTemplate.queryForObject(sql, new OrderItemMapper(), orderId);

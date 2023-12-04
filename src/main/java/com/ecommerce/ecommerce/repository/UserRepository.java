@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.CustomUser;
-import com.ecommerce.ecommerce.model.CustomUserResponse;
 
 public interface UserRepository {
     Long createUser(CustomUser customUser);

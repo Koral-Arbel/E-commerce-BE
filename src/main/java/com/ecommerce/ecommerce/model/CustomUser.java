@@ -22,9 +22,9 @@
             this.fullAddress = fullAddress;
             this.username = username;
             this.password = password;
-            this.active = 1;
             this.roles = roles;
             this.permissions = permissions;
+            this.active = 1;
         }
 
         public Long getId() {
@@ -69,45 +69,5 @@
 
         public String getPermissions() {
             return permissions;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public void setPhone(String phone) {
-            this.phone = phone;
-        }
-
-        public void setFullAddress(String fullAddress) {
-            this.fullAddress = fullAddress;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public void setActive(int active) {
-            this.active = active;
-        }
-
-        public void setRoles(String roles) {
-            this.roles = roles;
-        }
-
-        public void setPermissions(String permissions) {
-            this.permissions = permissions;
         }
     }

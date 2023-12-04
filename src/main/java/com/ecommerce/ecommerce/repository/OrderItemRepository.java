@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface OrderItemRepository {
     Long createOrderItem(OrderItem orderItem);
-    void updateCreateOrderItemById(Long orderId, OrderItem orderItem);
+    void updateOrderItemById(Long orderId, OrderItem orderItem);
     void deleteOrderItemById(Long id);
-    OrderItem getOrderItemByOrderId(Long orderId);
+    OrderItem getOrderItemById(Long orderId);
     List<OrderItem> getAllItemsByOrderId(Long orderId);
 
     void processPayment(Long orderId);

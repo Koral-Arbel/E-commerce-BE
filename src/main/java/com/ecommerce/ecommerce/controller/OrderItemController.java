@@ -20,8 +20,8 @@ public class OrderItemController {
     }
 
     @PutMapping("/update")
-    public void updateCreateOrderItemById(@PathVariable Long customerOrderId, @RequestBody OrderItem orderItem) {
-        orderItemService.updateCreateOrderItemById(customerOrderId, orderItem);
+    public void updateOrderItemById(@PathVariable Long customerOrderId, @RequestBody OrderItem orderItem) {
+        orderItemService.updateOrderItemById(customerOrderId, orderItem);
 }
 
     @DeleteMapping("/delete/{id}")

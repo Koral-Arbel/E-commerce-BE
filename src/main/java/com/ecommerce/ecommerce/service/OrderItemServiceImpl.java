@@ -22,25 +22,21 @@ public class OrderItemServiceImpl implements OrderItemService {
         if (orderItemRequest == null) {
             throw new IllegalArgumentException("OrderItemRequest is null");
         }
-
         // Retrieve item information
         Item itemInformation = itemService.getItemById(orderItemRequest.getItemId());
         if (itemInformation == null) {
             throw new NotFoundException("Item with id " + orderItemRequest.getItemId() + " not found");
         }
-
         // Check item availability
         if (itemInformation.getAvailableStock() == 0) {
             throw new IllegalArgumentException("Item is not available in stock");
         }
-
         Long orderId = orderService.getOpenOrderForUser(orderItemRequest.getUserId());
 
         if (orderId == null) {
             LocalDateTime date = LocalDateTime.now();
             Order newOrder = new Order(null, orderItemRequest.getUserId(), date, null, OrderStatus.TEMP);
             orderId = orderService.createOrder(newOrder);
-
         }
 
         Order openOrder = orderService.getOrderById(orderId);
@@ -81,23 +77,22 @@ public class OrderItemServiceImpl implements OrderItemService {
         return orderItemResponse;
     }
     @Override
-    public void updateCreateOrderItemById(Long customerOrderId, OrderItem orderItem ) {
-        orderItemRepository.updateCreateOrderItemById(customerOrderId, orderItem);
+    public void updateOrderItemById(Long customerOrderId, OrderItem orderItem ) {
+        orderItemRepository.updateOrderItemById(customerOrderId, orderItem);
     }
 
     @Override
     public void deleteOrderItemById(Long id) {
         orderItemRepository.deleteOrderItemById(id);
-
     }
 
     @Override
     public OrderItem getOrderItemById(Long id) {
-        return orderItemRepository.getOrderItemByOrderId(id);
+        return orderItemRepository.getOrderItemById(id);
     }
 
     @Override
-    public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
+    public List<OrderItem> getAllItemsByOrderId(Long orderId) {
         return orderItemRepository.getAllItemsByOrderId(orderId);
     }
 
