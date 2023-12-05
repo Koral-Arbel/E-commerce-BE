@@ -77,6 +77,6 @@ INSERT INTO item (title,photo,price,available_stock) VALUES
 ('AirPods Pro', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTJV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1694014871985',249.99, 13),
 ('Beats Fit Pro True Wireless Earbuds Coral Pink', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MPLJ3_AV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1674696408547',199.99, 2),
 ('Beats Fit Pro True Wireless Earbuds Tidal Blue', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MPLL3_AV2?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1674696409340',199.99, 2),
-('AirTag', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-single-select-202104_FV1?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761670000',29.99, 12);
+('AirTag', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-single-select-202104_FV1?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761670000',29.99, 11);
 
 
