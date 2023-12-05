@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/private")
+@RequestMapping("/api/public")
 public class PublicRestApiController {
     @GetMapping("/test1")
     @CrossOrigin

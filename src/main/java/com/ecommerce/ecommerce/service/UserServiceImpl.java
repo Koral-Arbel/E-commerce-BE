@@ -12,24 +12,19 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public Long createUser(CustomUser customUser) {
-        String email = customUser.getEmail();
+    public Long createUser(CustomUserRequest customUserRequest) throws Exception {
+        CustomUser user = new CustomUser();
+        String email = user.getEmail();
         if (userRepository.findUserByEmail(email) != null) {
             throw new IllegalArgumentException("Email is already registered.");
         }
-        CustomUser user = new CustomUser(
-                null,
-                customUser.getFirstName(),
-                customUser.getLastName(),
-                email,
-                customUser.getPhone(),
-                customUser.getFullAddress(),
-                customUser.getUsername(),
-                customUser.getPassword(),
-                null,
-                null
-        );
-        return userRepository.createUser(customUser);
+        CustomUser existingCustomUser = userRepository.findUserByUsername(customUserRequest.getUsername());
+        if (existingCustomUser != null) {
+            throw new Exception("Username " + customUserRequest.getUsername() + " is already taken");
+        }
+        CustomUser newUser = customUserRequest.toCustomUser();
+        return userRepository.createUser(newUser);
+
     }
 
     @Override

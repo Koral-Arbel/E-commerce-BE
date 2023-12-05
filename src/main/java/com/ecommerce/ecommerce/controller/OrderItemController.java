@@ -15,20 +15,24 @@ public class OrderItemController {
     private OrderItemService orderItemService;
 
     @PostMapping("/create")
+    @CrossOrigin
     public OrderItemResponse createOrderItem(@RequestBody OrderItemRequest orderItemRequest) throws Exception {
         return orderItemService.createOrderItem(orderItemRequest);
     }
 
     @PutMapping("/update")
+    @CrossOrigin
     public void updateOrderItemById(@PathVariable Long customerOrderId, @RequestBody OrderItem orderItem) {
         orderItemService.updateOrderItemById(customerOrderId, orderItem);
 }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin
     public void deleteOrderItemById(@PathVariable Long id) {
         orderItemService.deleteOrderItemById(id);
     }
     @GetMapping("/{id}")
+    @CrossOrigin
     public OrderItem getOrderItemById(@PathVariable Long id) {
         return orderItemService.getOrderItemById(id);
     }

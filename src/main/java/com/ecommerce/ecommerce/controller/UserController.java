@@ -16,8 +16,13 @@ public class UserController {
 
     @PostMapping("/create")
     @CrossOrigin
-    public Long createCustomUser(@RequestBody CustomUser customUser) throws Exception {
-        return userService.createUser(customUser);
+    public ResponseEntity<?> createUser(@RequestBody CustomUserRequest customUser) {
+        try {
+            userService.createUser(customUser);
+            return null;
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+        }
     }
 
     @PutMapping("/{userId}/update")

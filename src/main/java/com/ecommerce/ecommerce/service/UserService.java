@@ -4,7 +4,7 @@ import com.ecommerce.ecommerce.model.CustomUser;
 import com.ecommerce.ecommerce.model.CustomUserRequest;
 
 public interface UserService {
-    Long createUser(CustomUser customUser);
+    Long createUser(CustomUserRequest customUserRequest) throws Exception;
     CustomUser getCustomUserById(Long id);
     void updateCustomUserById(Long userId, CustomUser customUser);
     void deleteCustomUserById(Long id);

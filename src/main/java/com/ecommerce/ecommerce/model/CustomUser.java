@@ -13,6 +13,8 @@
         private String roles = "";
         private String permissions = "";
 
+        public CustomUser(){}
+
         public CustomUser(Long id, String firstName, String lastName, String email, String phone, String fullAddress, String username, String password, String roles, String permissions) {
             this.id = id;
             this.firstName = firstName;

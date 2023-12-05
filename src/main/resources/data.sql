@@ -65,15 +65,18 @@ CREATE TABLE order_item (
 
 
 INSERT INTO item (title,photo,price,available_stock) VALUES
-('Airpods2', 'http://atlas-content-cdn.pixelsquid.com/stock-images/apple-airpods-earphones-exdGm2B-600.jpg',400.99, 12),
-('AirpodsPro', 'https://static.esrgear.com/blog/wp-content/uploads/2022/06/airpods-pro-magsafe-case.png',599.99, 8),
-('Buds', 'https://www.imgshop.co.il/images/itempics/3638_260120211231561_large.jpg', 349.99, 10),
-('Laptop', 'https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901__340.jpg',3299.99, 9),
-('Apple Watch', 'https://photos5.appleinsider.com/gallery/50368-99094-000-lead-Two-Apple-Watches-xl.jpg',2500.99, 12),
-('iPhone-12', 'https://gadget-team.co.il/wp-content/uploads/2021/03/12-Apple-iPhone-12-128G-.jpg',3029.99, 10),
-('iphone-12ProMax', 'https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-pro-max-2.jpg',3999.99, 13),
-('iPhone-13-ProMax', 'https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-13-pro-max-2.jpg',4029.99, 12),
-('iPhone-11', 'https://gadget-team.co.il/wp-content/uploads/2021/03/IPHONE-11.jpg',2500.99, 12),
-('iPhone-11ProMax', 'https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-pro-10.jpg',3900.99, 12);
+('iPone 15 Pro', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-iphone-15-pro-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1696863030449',999.99, 12),
+('iPone 15', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-iphone-15-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1698188084112',799.99, 12),
+('Apple Watch Ultra 2', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-watch-ultra-2-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1698766696911',799.99, 8),
+('Apple Watch Series 9', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-watch-s9-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1696865069259',399.99, 8),
+('Apple Watch SE', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-watch-se-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1696863032977',249.99, 8),
+('MacBook Air', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-macbook-air-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1696863032996', 1299.99, 10),
+('MacBook Pro', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-macbook-pro-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1696872235281', 1599.99, 10),
+('iPad', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-ipad-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1696863030352',449.99, 12),
+('iPad Air', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/store-card-50-holiday-ipad-air-202311?wid=480&hei=500&fmt=p-jpg&qlt=95&.v=1696863032946',599.99, 10),
+('AirPods Pro', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTJV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1694014871985',249.99, 13),
+('Beats Fit Pro True Wireless Earbuds Coral Pink', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MPLJ3_AV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1674696408547',199.99, 2),
+('Beats Fit Pro True Wireless Earbuds Tidal Blue', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MPLL3_AV2?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1674696409340',199.99, 2),
+('AirTag', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-single-select-202104_FV1?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761670000',29.99, 12);
 
 

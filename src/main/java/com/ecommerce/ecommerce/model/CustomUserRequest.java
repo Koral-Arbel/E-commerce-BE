@@ -3,6 +3,7 @@ package com.ecommerce.ecommerce.model;
 public class CustomUserRequest {
     private String username;
     private String password;
+    public CustomUserRequest(){}
 
     public CustomUserRequest(String username, String password) {
         this.username = username;
