@@ -7,6 +7,8 @@ import com.ecommerce.ecommerce.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/orderItem")
 public class OrderItemController {
@@ -35,5 +37,11 @@ public class OrderItemController {
     @CrossOrigin
     public OrderItem getOrderItemById(@PathVariable Long id) {
         return orderItemService.getOrderItemById(id);
+    }
+
+    @GetMapping("/allOrderItems/{id}")
+    @CrossOrigin
+    public List<OrderItem> getAllItemsByOrderId(Long orderId){
+        return orderItemService.getAllItemsByOrderId(orderId);
     }
 }
