@@ -14,16 +14,14 @@ public class UserRepositoryImpl implements UserRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Long createUser(CustomUser customUser) {
+    public void createUser(CustomUser customUser) {
         String sql = "INSERT INTO " + USER_TABLE_NAME + " (first_name, last_name, email, phone, full_address, username, password, roles, permissions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), customUser.getRoles(), customUser.getPermissions());
-        return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID();", Long.class);
+        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), "DEFAULT_ROLE", "DEFAULT_PERMISSIONS");
     }
 
 
     @Override
     public CustomUser getCustomUserById(Long id) {
-        UserMapper userMapper = new UserMapper();
         String sql = "SELECT * FROM " + USER_TABLE_NAME + " WHERE id=?";
         try {
             return jdbcTemplate.queryForObject(sql, new UserMapper(), id);
@@ -36,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void updateCustomUserById(Long userId, CustomUser customUser) {
         String sql = "UPDATE " + USER_TABLE_NAME + " SET first_name=?, last_name=?, email=?, phone=?, full_address=?, username=?, password=?, roles=?, permissions=? " + "WHERE id=?";
-        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), customUser.getRoles(), customUser.getPermissions(), customUser.getId());
+        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(),  customUser.getRoles(), null, null, customUser.getId());
     }
 
     @Override

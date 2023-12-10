@@ -12,18 +12,17 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public Long createUser(CustomUserRequest customUserRequest) throws Exception {
+    public void createUser(CustomUser customUser) throws Exception {
         CustomUser user = new CustomUser();
         String email = user.getEmail();
         if (userRepository.findUserByEmail(email) != null) {
             throw new IllegalArgumentException("Email is already registered.");
         }
-        CustomUser existingCustomUser = userRepository.findUserByUsername(customUserRequest.getUsername());
+        CustomUser existingCustomUser = userRepository.findUserByUsername(customUser.getUsername());
         if (existingCustomUser != null) {
-            throw new Exception("Username " + customUserRequest.getUsername() + " is already taken");
+            throw new Exception("Username " + customUser.getUsername() + " is already taken");
         }
-        CustomUser newUser = customUserRequest.toCustomUser();
-        return userRepository.createUser(newUser);
+        userRepository.createUser(customUser);
 
     }
 
@@ -39,7 +38,6 @@ public class UserServiceImpl implements UserService {
         } else {
             System.out.println("Unable to update");
         }
-        userRepository.updateCustomUserById(userId, customUser);
     }
 
     @Override

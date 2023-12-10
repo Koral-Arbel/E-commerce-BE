@@ -14,8 +14,8 @@ CREATE TABLE custom_user (
     username VARCHAR(20) NOT NULL DEFAULT '',
     password VARCHAR(20) NOT NULL DEFAULT '',
     active tinyint(1) NOT NULL DEFAULT '1',
-    roles VARCHAR(200) NOT NULL DEFAULT '',
-    permissions VARCHAR(200) NOT NULL DEFAULT '',
+    roles VARCHAR(200) NULL DEFAULT '',
+    permissions VARCHAR(200) NULL DEFAULT '',
     PRIMARY KEY (id)
 );
 
