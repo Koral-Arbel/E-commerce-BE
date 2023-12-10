@@ -18,8 +18,8 @@ public class UserMapper implements RowMapper<CustomUser> {
                 rs.getString("full_address"),
                 rs.getString("username"),
                 rs.getString("password"),
-                null,
-                null
+                "",
+                ""
         );
     }
 }

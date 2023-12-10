@@ -34,11 +34,11 @@ public class CustomUserRequest {
                 "",
                 "",
                 "",
-                toCustomUser().getFullAddress(),
+                "",
                 this.username,
                 this.password,
-                null,
-                null
+                "",
+                ""
         );
     }
 }
