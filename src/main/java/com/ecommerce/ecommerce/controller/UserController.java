@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.model.CustomUser;
+import com.ecommerce.ecommerce.model.CustomUserResponse;
 import com.ecommerce.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,10 +44,16 @@ public class UserController {
         return userService.findUserByEmail(email);
     }
 
-    @GetMapping("/userData/{username}")
+    @GetMapping("/username/{username}")
     @CrossOrigin
     public CustomUser getCustomUserByUsername(@PathVariable String username) {
         return userService.findUserByUsername(username);
+    }
+
+    @GetMapping(value = "/profile/{username}")
+    @CrossOrigin
+    public CustomUserResponse getCustomerProfile(@PathVariable String username) throws Exception {
+        return userService.getCustomerProfile(username);
     }
 }
 

@@ -2,6 +2,7 @@ package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.model.CustomUser;
 import com.ecommerce.ecommerce.model.CustomUserRequest;
+import com.ecommerce.ecommerce.model.CustomUserResponse;
 import com.ecommerce.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,15 +14,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(CustomUser customUser) throws Exception {
-        CustomUser user = new CustomUser();
-        String email = user.getEmail();
+        String email = customUser.getEmail();
         if (userRepository.findUserByEmail(email) != null) {
             throw new IllegalArgumentException("Email is already registered.");
         }
+
         CustomUser existingCustomUser = userRepository.findUserByUsername(customUser.getUsername());
         if (existingCustomUser != null) {
             throw new Exception("Username " + customUser.getUsername() + " is already taken");
         }
+
         userRepository.createUser(customUser);
 
     }
@@ -56,11 +58,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUserJwt(CustomUserRequest customUserRequest) throws Exception {
-        CustomUser existingCustomUser = userRepository.findUserByUsername(customUserRequest.getUsername());
-        if(existingCustomUser != null){
-            throw new Exception("Username " + customUserRequest.getUsername() + " is already taken");
-        }
-        userRepository.createUser(customUserRequest.toCustomUser());
+    public CustomUserResponse getCustomerProfile(String username) throws Exception {
+        CustomUser curCustomer = userRepository.findUserByUsername(username);
+        CustomUserResponse existCustomerProfile = new CustomUserResponse();
+        return existCustomerProfile;
+
     }
 }
