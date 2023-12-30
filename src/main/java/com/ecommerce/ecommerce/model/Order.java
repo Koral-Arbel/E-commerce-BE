@@ -61,7 +61,7 @@ public class Order {
         this.status = status;
     }
 
-    private Double calculateTotalPrice(List<OrderItem> orderItems) {
+    private Double calculateTotalPriceInternal(List<OrderItem> orderItems) {
       return orderItems.stream().mapToDouble(orderItem -> orderItem.getPrice() * orderItem.getQuantity()).sum();
     }
 }

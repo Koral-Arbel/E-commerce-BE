@@ -42,13 +42,19 @@ public class OrderItemResponse {
     }
 
     public OrderItem toOrderItem() {
-        return new OrderItem(
-                this.order.getId(),
-                this.order.getUserId(),
-                this.order.getId(),
-                this.items.get(0).getId(),
-                this.items.get(0).getPrice() * toOrderItem().getQuantity(),
-                this.items.size()
-        );
+        if (items != null && !items.isEmpty()) {
+            Item firstItem = items.get(0);
+            return new OrderItem(
+                    this.order.getId(),
+                    this.order.getUserId(),
+                    this.order.getId(),
+                    firstItem.getId(),
+                    firstItem.getPrice() * items.size(),
+                    items.size()
+            );
+        } else {
+            // Handle the case when items list is null or empty
+            return null;
+        }
     }
 }

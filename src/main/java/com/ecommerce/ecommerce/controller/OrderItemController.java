@@ -1,5 +1,6 @@
 package com.ecommerce.ecommerce.controller;
 
+import com.ecommerce.ecommerce.model.Order;
 import com.ecommerce.ecommerce.model.OrderItem;
 import com.ecommerce.ecommerce.model.OrderItemRequest;
 import com.ecommerce.ecommerce.model.OrderItemResponse;
@@ -26,12 +27,12 @@ public class OrderItemController {
     @CrossOrigin
     public void updateOrderItemById(@PathVariable Long customerOrderId, @RequestBody OrderItem orderItem) {
         orderItemService.updateOrderItemById(customerOrderId, orderItem);
-}
+    }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{itemId}")
     @CrossOrigin
-    public void deleteOrderItemById(@PathVariable Long id) {
-        orderItemService.deleteOrderItemById(id);
+    public void deleteOrderItemById(@PathVariable Long itemId) {
+        orderItemService.deleteOrderItemById(itemId);
     }
     @GetMapping("/{id}")
     @CrossOrigin

@@ -1,19 +1,20 @@
 package com.ecommerce.ecommerce.service;
 
 import com.ecommerce.ecommerce.model.FavoriteItem;
+import com.ecommerce.ecommerce.model.Item;
 
 import java.util.List;
 
 public interface FavoriteItemService {
-    Long createItemAddToFavorites(FavoriteItem favoriteItem) throws Exception;
+    Long createItemAddToFavorite(FavoriteItem favoriteItem) throws Exception;
 
-    void updateFavorites(Long id, FavoriteItem favoriteItem);
+    void updateFavoriteById(Long id, FavoriteItem favoriteItem);
 
-    FavoriteItem getFavoriteItemListById(Long id);
+    FavoriteItem getFavoriteItemListById(Long userId);
 
-    void removeFromFavorites(Long id);
+    void deleteFavoriteItemById(Long id);
 
     void deleteAllItemFromFavoriteByUserId(Long userId);
 
-    List<FavoriteItem> getFavoriteItemsByUserId(Long userId);
+    List<Item> getFavoriteItemsByUserId(Long userId);
 }

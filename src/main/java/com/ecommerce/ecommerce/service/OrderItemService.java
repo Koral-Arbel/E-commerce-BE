@@ -9,7 +9,7 @@ import java.util.List;
 public interface OrderItemService {
     OrderItemResponse createOrderItem(OrderItemRequest orderItemRequest) throws Exception;
     void updateOrderItemById(Long customerOrderId, OrderItem orderItem);
-    void deleteOrderItemById(Long id);
+    void deleteOrderItemById(Long itemId);
     OrderItem getOrderItemById(Long id);
     List<OrderItem> getAllItemsByOrderId(Long orderId);
 }

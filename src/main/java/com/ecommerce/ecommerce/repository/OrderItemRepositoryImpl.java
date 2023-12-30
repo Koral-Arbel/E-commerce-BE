@@ -35,7 +35,7 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     }
     @Override
     public OrderItem getOrderItemById(Long orderId) {
-        String sql = "SELECT * FROM " + ORDER_ITEM_TABLE_NAME + " WHERE id=?";
+        String sql = "SELECT * FROM " + ORDER_ITEM_TABLE_NAME + " WHERE order_id=?";
         try {
             return jdbcTemplate.queryForObject(sql, new OrderItemMapper(), orderId);
         } catch (EmptyResultDataAccessException exception) {
@@ -45,9 +45,9 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     }
 
     @Override
-    public void deleteOrderItemById(Long id) {
-        String sql = "DELETE FROM " + ORDER_ITEM_TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(sql, id);
+    public void deleteOrderItemById(Long itemId) {
+        String sql = "DELETE FROM " + ORDER_ITEM_TABLE_NAME + " WHERE item_id=?";
+        jdbcTemplate.update(sql, itemId);
     }
 
     @Override

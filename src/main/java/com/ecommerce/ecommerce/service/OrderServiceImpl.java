@@ -7,7 +7,6 @@ import com.ecommerce.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -19,23 +18,23 @@ public class OrderServiceImpl implements OrderService {
     ItemRepository itemRepository;
 
     @Override
-    public Long createOrder(Order order) {
-        CustomUser user = getOrderByUserId(order.getUserId());
+    public Long createOrder(Order orderDto) {
+        CustomUser user = getOrderByUserId(orderDto.getUserId());
         if (user == null) {
             throw new IllegalArgumentException("You must register first");
         }
-        Long existingOpenOrderId = getOpenOrderForUser(order.getUserId());
+        Long existingOpenOrderId = getOpenOrderForUserId(orderDto.getUserId());
         if (existingOpenOrderId != null) {
             throw new IllegalStateException("The user already has an open order in TEMP status");
         }
-        Long orderId = orderRepository.createOrder(order);
+        Long orderId = orderRepository.createOrder(orderDto);
         return orderId;
     }
 
 
     @Override
-    public void updateOrderById(Order order) {
-        orderRepository.updateOrderById(order);
+    public void updateOrderById(Order orderDto) {
+        orderRepository.updateOrderById(orderDto);
     }
 
     @Override
@@ -55,8 +54,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long getOpenOrderForUser(Long userId) {
-        return orderRepository.getOpenOrderForUser(userId);
+    public Long getOpenOrderForUserId(Long userId) {
+        return orderRepository.getOpenOrderForUserId(userId);
     }
 
     @Override

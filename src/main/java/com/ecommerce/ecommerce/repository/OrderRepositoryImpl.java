@@ -61,12 +61,12 @@ public class OrderRepositoryImpl implements OrderRepository{
     }
 
     @Override
-    public Long getOpenOrderForUser(Long userId) {
-        String sql = "SELECT id FROM " + ORDER_TABLE_NAME + " WHERE user_id = ? AND status = 'TEMP'";
+    public Long getOpenOrderForUserId(Long userId) {
+        String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE user_id=? AND status= 'TEMP'";
         try {
-            return jdbcTemplate.queryForObject(sql, Long.class, userId);
-        } catch (EmptyResultDataAccessException e) {
-            return null; // If there is no open order, return null
+            return jdbcTemplate.queryForObject(sql, new OrderMapper(), userId).getId();
+        } catch (EmptyResultDataAccessException error) {
+            return null;
         }
     }
 }

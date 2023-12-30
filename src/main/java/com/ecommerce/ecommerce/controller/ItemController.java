@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/public/item")
+@RequestMapping("/item")
 public class ItemController {
     @Autowired
     ItemService itemService;
@@ -23,7 +23,7 @@ public class ItemController {
         itemService.updateItemById(item);
     }
 
-    @GetMapping(value = "/{itemId}")
+    @GetMapping(value = "/{id}")
     @CrossOrigin
     public Item getItemById(@PathVariable Long itemId){
         return itemService.getItemById(itemId);

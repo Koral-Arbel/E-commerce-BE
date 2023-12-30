@@ -12,34 +12,58 @@ import java.util.List;
 public class FavoriteItemServiceImpl implements FavoriteItemService {
     @Autowired
     private FavoriteItemRepository favoriteItemRepository;
+    @Autowired
+    ItemService itemService;
 
     @Override
-    public Long createItemAddToFavorites(FavoriteItem favoriteItem) throws Exception {
-        return null;
+    public Long createItemAddToFavorite(FavoriteItem favoriteItem) throws Exception {
+        if (favoriteItem != null){
+            Item wantedItem = itemService.getItemById(favoriteItem.getItemId());
+            if (wantedItem != null){
+                List<Item> userFavoriteItem = favoriteItemRepository.getFavoriteItemsByUserId(favoriteItem.getUserId());
+                boolean isFound = false;
+                for (Item item : userFavoriteItem) {
+                    if (item.getId().equals(wantedItem.getId())) {
+                        isFound = true;
+                        break;
+                    }
+                }
+                if (isFound) {
+                    throw new Exception("product already in wishlist");
+
+                } else {
+                    return favoriteItemRepository.createItemAddToFavorites(favoriteItem);
+                }
+            }else {
+                throw new Exception("No such product");
+            }
+        }else {
+            throw new Exception("no wishlist product to add");
+        }
     }
 
     @Override
-    public void updateFavorites(Long id, FavoriteItem favoriteItem) {
-
+    public void updateFavoriteById(Long id, FavoriteItem favoriteItem) {
+        favoriteItemRepository.updateFavorites(id, favoriteItem);
     }
 
     @Override
-    public FavoriteItem getFavoriteItemListById(Long id) {
-        return null;
+    public FavoriteItem getFavoriteItemListById(Long userId) {
+        return favoriteItemRepository.getFavoriteItemListById(userId);
     }
 
     @Override
-    public void removeFromFavorites(Long id) {
-
+    public void deleteFavoriteItemById(Long id) {
+        favoriteItemRepository.removeFromFavorites(id);
     }
 
     @Override
     public void deleteAllItemFromFavoriteByUserId(Long userId) {
-
+        favoriteItemRepository.deleteAllItemFromFavoriteByUserId(userId);
     }
 
     @Override
-    public List<FavoriteItem> getFavoriteItemsByUserId(Long userId) {
-        return null;
+    public List<Item> getFavoriteItemsByUserId(Long userId) {
+        return favoriteItemRepository.getFavoriteItemsByUserId(userId);
     }
 }
