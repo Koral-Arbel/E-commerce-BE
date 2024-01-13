@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class OrderRepositoryImpl implements OrderRepository{
     private static final String ORDER_TABLE_NAME = "orders";
@@ -31,13 +33,6 @@ public class OrderRepositoryImpl implements OrderRepository{
                 order.getStatus().name(),
                 order.getId());
     }
-
-    @Override
-    public void deleteOrderById(Long id) {
-        String sql = "DELETE FROM " + ORDER_TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(sql,id);
-    }
-
     @Override
     public Order getOrderById(Long id) {
         String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE id=?";
@@ -50,15 +45,13 @@ public class OrderRepositoryImpl implements OrderRepository{
     }
 
     @Override
-    public Order getOrderByUserId(Long userId) {
-        String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE user_id=?";
-        try {
-            return jdbcTemplate.queryForObject(sql, new OrderMapper(), userId);
-        } catch (EmptyResultDataAccessException exception) {
-            System.out.println("Warning: EmptyResultDataAccessException");
-            return null;
-        }
+    public void deleteOrderById(Long id) {
+        String sql = "DELETE FROM " + ORDER_TABLE_NAME + " WHERE id=?";
+        jdbcTemplate.update(sql,id);
     }
+
+
+
 
     @Override
     public Long getOpenOrderForUserId(Long userId) {
@@ -68,5 +61,10 @@ public class OrderRepositoryImpl implements OrderRepository{
         } catch (EmptyResultDataAccessException error) {
             return null;
         }
+    }
+
+    @Override
+    public List<Order> getClosedOrderByUserId(Long userId) {
+        return null;
     }
 }

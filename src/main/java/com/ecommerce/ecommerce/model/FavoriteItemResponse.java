@@ -2,13 +2,13 @@ package com.ecommerce.ecommerce.model;
 
 public class FavoriteItemResponse {
     private Long id;
-    private CustomUserResponse customUserResponse;
+    private CustomerProfileResponse customerProfileResponse;
     private Item item;
     public FavoriteItemResponse(){}
 
-    public FavoriteItemResponse(Long id, CustomUserResponse customUserResponse, Item item) {
+    public FavoriteItemResponse(Long id, CustomerProfileResponse customerProfileResponse, Item item) {
         this.id = id;
-        this.customUserResponse = customUserResponse;
+        this.customerProfileResponse = customerProfileResponse;
         this.item = item;
     }
 
@@ -16,8 +16,8 @@ public class FavoriteItemResponse {
         return id;
     }
 
-    public CustomUserResponse getCustomUserResponse() {
-        return customUserResponse;
+    public CustomerProfileResponse getCustomUserResponse() {
+        return customerProfileResponse;
     }
 
     public Item getItem() {
@@ -28,8 +28,8 @@ public class FavoriteItemResponse {
         this.id = id;
     }
 
-    public void setCustomUserResponse(CustomUserResponse customUserResponse) {
-        this.customUserResponse = customUserResponse;
+    public void setCustomUserResponse(CustomerProfileResponse customerProfileResponse) {
+        this.customerProfileResponse = customerProfileResponse;
     }
 
     public void setItem(Item item) {

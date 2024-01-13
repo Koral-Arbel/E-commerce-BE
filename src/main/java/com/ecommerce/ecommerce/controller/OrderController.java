@@ -12,43 +12,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping(value = "/order")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
-    @PostMapping("/create")
     @CrossOrigin
-    public Long createOrder(@RequestBody Order order) {
+    @PostMapping(value= "/create")
+    public Long createOrder(@RequestBody Order order) throws Exception {
        return orderService.createOrder(order);
     }
-
-    @PutMapping("/update")
+    @CrossOrigin
+    @PutMapping(value = "/update")
     public void updateOrder(@RequestBody Order order, @RequestBody List<OrderItem>orderItems) {
         orderService.updateOrderById(order);
     }
-
-    @DeleteMapping("/delete/{orderId}")
     @CrossOrigin
+    @DeleteMapping(value = "/delete/{orderId}")
     public void deleteOrderById(@PathVariable Long orderId) {
         orderService.deleteOrderById(orderId);
     }
-
-    @GetMapping("/{orderId}")
     @CrossOrigin
-    public Order getOrderById(@PathVariable Long orderId) {
-        return orderService.getOrderById(orderId);
+    @GetMapping(value = "/{userId}/statusOrder")
+    public Order getOrderById(@PathVariable Long userId) {
+        return orderService.getOrderById(userId);
     }
-
-    @GetMapping(value = "/{userId}/openOrder")
     @CrossOrigin
+    @GetMapping(value = "/openOrder/{userId}")
     public Long getOpenOrderByUserId(@PathVariable Long userId){
         return orderService.getOpenOrderForUserId(userId);
     }
 
-    @PostMapping("/{orderId}/processPayment")
     @CrossOrigin
+    @PostMapping(value = "/processPayment/{orderId}")
     public ResponseEntity<String> processPayment(@PathVariable Long orderId) {
         try {
             orderService.processPayment(orderId);
@@ -56,5 +52,11 @@ public class OrderController {
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to process payment: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/{userId}/lastOrders")
+    public List<OrderDto> getOrderListsByUserId(@PathVariable Long userId) throws Exception {
+        return orderService.getOrderListsByUserId(userId);
     }
 }

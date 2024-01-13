@@ -4,28 +4,28 @@ import java.util.List;
 
 public class OrderDto {
     private Order order;
-    private List<OrderItem> orderItems;
+    private List<ItemDto> item;
 
     public OrderDto(){}
 
-    public OrderDto(Order order, List<OrderItem> orderItems) {
+    public OrderDto(Order order, List<ItemDto> item) {
         this.order = order;
-        this.orderItems = orderItems;
+        this.item = item;
     }
 
     public Order getOrder() {
         return order;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    public List<ItemDto> getItem() {
+        return item;
     }
 
     public void setOrder(Order order) {
         this.order = order;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setItem(List<ItemDto> item) {
+        this.item = item;
     }
 }

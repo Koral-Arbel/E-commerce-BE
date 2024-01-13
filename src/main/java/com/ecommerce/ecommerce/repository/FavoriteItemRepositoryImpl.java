@@ -3,6 +3,7 @@ package com.ecommerce.ecommerce.repository;
 import com.ecommerce.ecommerce.model.FavoriteItem;
 import com.ecommerce.ecommerce.model.Item;
 import com.ecommerce.ecommerce.repository.mapper.FavoriteItemMapper;
+import com.ecommerce.ecommerce.repository.mapper.ItemDtoMapper;
 import com.ecommerce.ecommerce.repository.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -56,8 +57,8 @@ public class FavoriteItemRepositoryImpl implements FavoriteItemRepository {
     }
     @Override
     public List<Item> getFavoriteItemsByUserId(Long userId) {
-        String sql = "SELECT " + ITEM_TABLE_NAME + ".*, " + FAVORITE_ITEM_TABLE_NAME + ".id as itemId FROM " + ITEM_TABLE_NAME +
-                " INNER JOIN " + FAVORITE_ITEM_TABLE_NAME + " ON " + ITEM_TABLE_NAME + ".id = " + FAVORITE_ITEM_TABLE_NAME + ".item.id" +
+        String sql = "SELECT " + ITEM_TABLE_NAME + ".*, " + FAVORITE_ITEM_TABLE_NAME + ".id FROM " + ITEM_TABLE_NAME +
+                " INNER JOIN " + FAVORITE_ITEM_TABLE_NAME + " ON " + ITEM_TABLE_NAME + ".id = " + FAVORITE_ITEM_TABLE_NAME + ".item_id" +
                 " WHERE " + FAVORITE_ITEM_TABLE_NAME + ".user_id=?";
         try {
             return jdbcTemplate.query(sql, new ItemMapper(), userId);

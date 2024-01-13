@@ -7,14 +7,17 @@ public class ItemDto {
     private Double price;
     private Integer quantity = 0;
     private Integer availableStock;
+    private Long serial;
+    public ItemDto(){}
 
-    public ItemDto(Long id, String title, String photo, Double price, Integer quantity, Integer availableStock) {
+    public ItemDto(Long id, String title, String photo, Double price, Integer quantity, Integer availableStock, Long serial) {
         this.id = id;
         this.title = title;
         this.photo = photo;
         this.price = price;
         this.quantity = quantity;
         this.availableStock = availableStock;
+        this.serial = serial;
     }
 
     public Long getId() {
@@ -40,6 +43,10 @@ public class ItemDto {
         return availableStock;
     }
 
+    public Long getSerial() {
+        return serial;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -61,6 +68,10 @@ public class ItemDto {
 
     public void setAvailableStock(Integer availableStock) {
         this.availableStock = availableStock;
+    }
+
+    public void setSerial(Long serial) {
+        this.serial = serial;
     }
 
     public Item toItem(){

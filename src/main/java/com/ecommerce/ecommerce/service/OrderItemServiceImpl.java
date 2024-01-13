@@ -2,7 +2,6 @@
     import com.ecommerce.ecommerce.model.*;
     import com.ecommerce.ecommerce.repository.OrderItemRepository;
     import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.security.acls.model.NotFoundException;
     import org.springframework.stereotype.Service;
 
     import java.time.LocalDateTime;
@@ -24,7 +23,7 @@
             // Retrieve item information
             Item itemInformation = itemService.getItemById(orderItemRequest.getItemId());
             if (itemInformation == null) {
-                throw new NotFoundException("Item with id " + orderItemRequest.getItemId() + " not found");
+                throw new IllegalArgumentException("Item with id " + orderItemRequest.getItemId() + " not found");
             }
             // Check item availability
             if (itemInformation.getAvailableStock() == 0) {
@@ -76,13 +75,33 @@
             return orderItemResponse;
         }
         @Override
-        public void updateOrderItemById(Long customerOrderId, OrderItem orderItem ) {
-            orderItemRepository.updateOrderItemById(customerOrderId, orderItem);
+        public void updateOrderItemById(Long id, OrderItem orderItem ) {
+            orderItemRepository.updateOrderItemById(id, orderItem);
         }
 
         @Override
         public void deleteOrderItemById(Long itemId) {
             orderItemRepository.deleteOrderItemById(itemId);
+        }
+
+        @Override
+        public List<ItemDto> getAllOrderItemsByUserId(Long userId) {
+            return null;
+        }
+
+        @Override
+        public List<Item> getAllOrderItemsByOrderId(Long orderId) {
+            return null;
+        }
+
+        @Override
+        public void updateOrderIdByUserId(Long userId, Long orderId) {
+
+        }
+
+        @Override
+        public void deleteOrderItemsByUserId(Long userId) {
+
         }
 
         @Override

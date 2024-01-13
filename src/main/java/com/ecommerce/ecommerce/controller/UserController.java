@@ -1,58 +1,50 @@
 package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.model.CustomUser;
-import com.ecommerce.ecommerce.model.CustomUserResponse;
+import com.ecommerce.ecommerce.model.CustomerProfileResponse;
 import com.ecommerce.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user")
 public class UserController {
     @Autowired
     private UserService userService;
-
-    @PostMapping("/create")
     @CrossOrigin
+    @PostMapping(value = "/create")
     public void createUser(@RequestBody CustomUser customUser) throws Exception {
        userService.createUser(customUser);
     }
-
-    @PutMapping("/{userId}/update")
     @CrossOrigin
+    @PutMapping(value = "/{userId}/update")
     public void updateCustomUser(@PathVariable Long userId, @RequestBody CustomUser customUser){
         userService.updateCustomUserById(userId, customUser);
     }
-
-    @DeleteMapping("/deleteUser/{userId}")
     @CrossOrigin
-    public void deleteCustomUser(@PathVariable Long userId) {
+    @DeleteMapping(value = "/deleteUser/{userId}")
+    public void deleteCustomUser(@PathVariable Long userId) throws Exception {
         userService.deleteCustomUserById(userId);
     }
-
-    @GetMapping("/getUser/{userId}")
     @CrossOrigin
+    @GetMapping(value = "/getUser/{userId}")
     public CustomUser getCustomUserById(@PathVariable Long userId){
        return userService.getCustomUserById(userId);
     }
-
-    @GetMapping("/getUserByEmail/{email}")
     @CrossOrigin
+    @GetMapping(value = "/getUserByEmail/{email}")
     public CustomUser getCustomUserByEmail(@PathVariable String email) {
         return userService.findUserByEmail(email);
     }
 
-    @GetMapping("/username/{username}")
     @CrossOrigin
+    @GetMapping(value = "/username/{username}")
     public CustomUser getCustomUserByUsername(@PathVariable String username) {
         return userService.findUserByUsername(username);
     }
-
-    @GetMapping(value = "/profile/{username}")
     @CrossOrigin
-    public CustomUserResponse getCustomerProfile(@PathVariable String username) throws Exception {
+    @GetMapping(value = "/profile/{username}")
+    public CustomerProfileResponse getCustomerProfile(@PathVariable String username) throws Exception {
         return userService.getCustomerProfile(username);
     }
 }

@@ -11,37 +11,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orderItem")
+@RequestMapping(value = "/orderItem")
 public class OrderItemController {
 
     @Autowired
     private OrderItemService orderItemService;
-
-    @PostMapping("/create")
     @CrossOrigin
+    @PostMapping(value = "/create")
     public OrderItemResponse createOrderItem(@RequestBody OrderItemRequest orderItemRequest) throws Exception {
         return orderItemService.createOrderItem(orderItemRequest);
     }
-
-    @PutMapping("/update")
     @CrossOrigin
+    @PutMapping(value = "/update")
     public void updateOrderItemById(@PathVariable Long customerOrderId, @RequestBody OrderItem orderItem) {
         orderItemService.updateOrderItemById(customerOrderId, orderItem);
     }
-
-    @DeleteMapping("/delete/{itemId}")
     @CrossOrigin
+    @DeleteMapping(value = "/delete/{itemId}")
     public void deleteOrderItemById(@PathVariable Long itemId) {
         orderItemService.deleteOrderItemById(itemId);
     }
-    @GetMapping("/{id}")
     @CrossOrigin
+    @GetMapping(value = "/{id}")
     public OrderItem getOrderItemById(@PathVariable Long id) {
         return orderItemService.getOrderItemById(id);
     }
 
-    @GetMapping("/allOrderItems/{id}")
     @CrossOrigin
+    @GetMapping(value = "/allOrderItems/{id}")
     public List<OrderItem> getAllItemsByOrderId(Long orderId){
         return orderItemService.getAllItemsByOrderId(orderId);
     }

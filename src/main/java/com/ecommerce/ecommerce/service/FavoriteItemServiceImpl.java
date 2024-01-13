@@ -29,17 +29,18 @@ public class FavoriteItemServiceImpl implements FavoriteItemService {
                     }
                 }
                 if (isFound) {
-                    throw new Exception("product already in wishlist");
+                    throw new Exception("item already in favorite List");
 
                 } else {
                     return favoriteItemRepository.createItemAddToFavorites(favoriteItem);
                 }
             }else {
-                throw new Exception("No such product");
+                throw new Exception("No such item");
             }
         }else {
-            throw new Exception("no wishlist product to add");
+            throw new Exception("no favorite item list to add");
         }
+
     }
 
     @Override

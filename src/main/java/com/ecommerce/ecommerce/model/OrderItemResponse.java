@@ -7,15 +7,12 @@ public class OrderItemResponse {
     private List<Item> items;
     private Double totalPrice;
 
-
-    public OrderItemResponse() {
-    }
-
     public OrderItemResponse(Order order, List<Item> items, Double totalPrice) {
         this.order = order;
         this.items = items;
         this.totalPrice = totalPrice;
     }
+    public OrderItemResponse(){}
 
     public Order getOrder() {
         return order;

@@ -1,7 +1,7 @@
 package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.Item;
-import com.ecommerce.ecommerce.model.ItemDto;
+import com.ecommerce.ecommerce.repository.mapper.ItemDtoMapper;
 import com.ecommerce.ecommerce.repository.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

@@ -1,6 +1,6 @@
 package com.ecommerce.ecommerce.model;
 
-public class TestResponse {
+public class    TestResponse {
     private String response;
 
     public TestResponse(){};
