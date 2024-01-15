@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/public/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -27,7 +27,7 @@ public class UserController {
         userService.deleteCustomUserById(userId);
     }
     @CrossOrigin
-    @GetMapping(value = "/getUser/{userId}")
+    @GetMapping(value = "/getUser")
     public CustomUser getCustomUserById(@PathVariable Long userId){
        return userService.getCustomUserById(userId);
     }
@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/username/{username}")
-    public CustomUser getCustomUserByUsername(@PathVariable String username) {
+    @GetMapping(value = "/findUser/{username}")
+    public CustomUser findUserByUsername(@PathVariable String username) {
         return userService.findUserByUsername(username);
     }
     @CrossOrigin
