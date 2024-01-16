@@ -14,4 +14,5 @@ public interface ItemService {
 
     List<Item> getItemsByOrderId(Long orderId);
 
+    List<Item> searchItems(String title);
 }

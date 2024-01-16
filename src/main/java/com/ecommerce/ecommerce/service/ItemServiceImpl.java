@@ -65,4 +65,9 @@ public class ItemServiceImpl implements ItemService{
     public List<Item> getItemsByOrderId(Long orderId) {
         return itemRepository.getItemsByOrderId(orderId);
     }
+
+    @Override
+    public List<Item> searchItems(String title) {
+        return itemRepository.searchItems(title);
+    }
 }

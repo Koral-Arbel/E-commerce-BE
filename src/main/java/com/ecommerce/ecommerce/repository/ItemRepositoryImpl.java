@@ -5,6 +5,7 @@ import com.ecommerce.ecommerce.repository.mapper.ItemDtoMapper;
 import com.ecommerce.ecommerce.repository.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -77,4 +78,13 @@ public class ItemRepositoryImpl implements ItemRepository {
             return null;
         }
     }
+
+    @Override
+    public List<Item> searchItems(String title) {
+        String sql = "SELECT * FROM items WHERE LOWER(title) LIKE LOWER(?)";
+        String likeTerm = "%" + title + "%";
+
+        return jdbcTemplate.query(sql, new Object[]{likeTerm}, new BeanPropertyRowMapper<>(Item.class));
+    }
 }
+

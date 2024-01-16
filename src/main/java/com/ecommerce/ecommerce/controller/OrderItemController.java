@@ -1,6 +1,5 @@
 package com.ecommerce.ecommerce.controller;
 
-import com.ecommerce.ecommerce.model.Order;
 import com.ecommerce.ecommerce.model.OrderItem;
 import com.ecommerce.ecommerce.model.OrderItemRequest;
 import com.ecommerce.ecommerce.model.OrderItemResponse;
@@ -23,8 +22,8 @@ public class OrderItemController {
     }
     @CrossOrigin
     @PutMapping(value = "/update")
-    public void updateOrderItemById(@PathVariable Long customerOrderId, @RequestBody OrderItem orderItem) {
-        orderItemService.updateOrderItemById(customerOrderId, orderItem);
+    public void updateOrderItemById( @RequestBody OrderItem orderItem) {
+        orderItemService.updateOrderItemById(orderItem.getId(), orderItem);
     }
     @CrossOrigin
     @DeleteMapping(value = "/delete/{itemId}")

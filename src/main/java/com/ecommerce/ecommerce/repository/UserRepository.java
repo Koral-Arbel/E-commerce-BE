@@ -1,6 +1,9 @@
 package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.CustomUser;
+import com.ecommerce.ecommerce.model.Item;
+
+import java.util.List;
 
 public interface UserRepository {
     void createUser(CustomUser customUser);

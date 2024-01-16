@@ -14,5 +14,6 @@ public interface ItemRepository {
     void updateAvailableStock(Long itemId, Integer availableStock);
 
     List<Item> getItemsByOrderId(Long orderId);
+    List<Item> searchItems(String title);
 
 }

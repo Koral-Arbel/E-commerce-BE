@@ -33,7 +33,7 @@ public class OrderController {
         orderService.deleteOrderById(orderId);
     }
     @CrossOrigin
-    @GetMapping(value = "/{userId}/statusOrder")
+    @GetMapping(value = "/orderTemp/{userId}")
     public Order getOrderById(@PathVariable Long userId) {
         return orderService.getOrderById(userId);
     }

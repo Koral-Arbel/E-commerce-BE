@@ -1,11 +1,15 @@
 package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.CustomUser;
+import com.ecommerce.ecommerce.model.Item;
 import com.ecommerce.ecommerce.repository.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -34,13 +38,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void updateCustomUserById(Long userId, CustomUser customUser) {
         String sql = "UPDATE " + USER_TABLE_NAME + " SET first_name=?, last_name=?, email=?, phone=?, full_address=?, username=?, password=?, roles=?, permissions=? " + "WHERE id=?";
-        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(),"", "", customUser.getId());
+        jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), "", "", customUser.getId());
     }
 
     @Override
     public void deleteCustomUserById(Long id) {
         String sql = "DELETE FROM " + USER_TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(sql,id);
+        jdbcTemplate.update(sql, id);
     }
 
     @Override
@@ -62,4 +66,5 @@ public class UserRepositoryImpl implements UserRepository {
             return null;
         }
     }
+
 }
