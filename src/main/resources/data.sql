@@ -81,4 +81,4 @@ INSERT INTO item (title,photo,price,available_stock) VALUES
 
 
 INSERT INTO custom_user (first_name, last_name, email, phone, full_address, username, password, active, roles, permissions)
-VALUES ('John', 'Doe', 'john@example.com', '123-456-789', '123 Main St, City', 'john_doe', '1234', 1, 'user', 'read');
+VALUES ('Koral', 'Arbel', 'john@example.com', '123-456-789', '123 Main St, City', 'korali', '1234', 1, 'user', 'read');

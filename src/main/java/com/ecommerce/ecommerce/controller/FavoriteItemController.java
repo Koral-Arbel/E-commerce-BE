@@ -2,7 +2,6 @@ package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.model.FavoriteItem;
 import com.ecommerce.ecommerce.model.Item;
-import com.ecommerce.ecommerce.model.ItemDto;
 import com.ecommerce.ecommerce.service.FavoriteItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
