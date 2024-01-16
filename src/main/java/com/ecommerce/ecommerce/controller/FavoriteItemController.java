@@ -36,7 +36,7 @@ public class FavoriteItemController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/{userId}/all")
+    @GetMapping(value = "/all/{userId}")
     public List<Item> getFavoriteItemsByUserId(@PathVariable Long userId){
        return favoriteItemService.getFavoriteItemsByUserId(userId);
     }

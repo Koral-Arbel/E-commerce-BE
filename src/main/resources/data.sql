@@ -80,3 +80,5 @@ INSERT INTO item (title,photo,price,available_stock) VALUES
 ('AirTag', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-single-select-202104_FV1?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761670000',29.99, 11);
 
 
+INSERT INTO custom_user (first_name, last_name, email, phone, full_address, username, password, active, roles, permissions)
+VALUES ('John', 'Doe', 'john@example.com', '123-456-789', '123 Main St, City', 'john_doe', '1234', 1, 'user', 'read');
