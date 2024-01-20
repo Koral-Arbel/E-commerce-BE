@@ -7,17 +7,15 @@ public class ItemDto {
     private Double price;
     private Integer quantity = 0;
     private Integer availableStock;
-    private Long serial;
     public ItemDto(){}
 
-    public ItemDto(Long id, String title, String photo, Double price, Integer quantity, Integer availableStock, Long serial) {
+    public ItemDto(Long id, String title, String photo, Double price, Integer quantity, Integer availableStock) {
         this.id = id;
         this.title = title;
         this.photo = photo;
         this.price = price;
         this.quantity = quantity;
         this.availableStock = availableStock;
-        this.serial = serial;
     }
 
 
@@ -44,10 +42,6 @@ public class ItemDto {
         return availableStock;
     }
 
-    public Long getSerial() {
-        return serial;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -69,19 +63,5 @@ public class ItemDto {
 
     public void setAvailableStock(Integer availableStock) {
         this.availableStock = availableStock;
-    }
-
-    public void setSerial(Long serial) {
-        this.serial = serial;
-    }
-
-    public Item toItem() {
-        Item item = new Item();
-        item.setId(this.getId());
-        item.setTitle(this.getTitle());
-        item.setPhoto(this.getPhoto());
-        item.setPrice(this.getPrice());
-        item.setAvailableStock(this.getAvailableStock());
-        return item;
     }
 }

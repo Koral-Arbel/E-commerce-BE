@@ -1,7 +1,5 @@
 package com.ecommerce.ecommerce.model;
 
-import java.util.List;
-
 public class Item {
     private Long id;
     private String title;
@@ -62,9 +60,8 @@ public class Item {
                 this.getTitle(),
                 this.getPhoto(),
                 this.getPrice(),
-                0, // Assuming quantity is not a field in Item class
-                this.getAvailableStock(),
-                null // Assuming serial is not a field in Item class
+                toItemDto().getQuantity(),
+                this.getAvailableStock()
         );
     }
 }

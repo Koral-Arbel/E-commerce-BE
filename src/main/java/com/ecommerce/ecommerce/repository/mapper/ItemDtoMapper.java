@@ -1,6 +1,5 @@
 package com.ecommerce.ecommerce.repository.mapper;
 
-import com.ecommerce.ecommerce.model.Item;
 import com.ecommerce.ecommerce.model.ItemDto;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -16,8 +15,8 @@ public class ItemDtoMapper implements RowMapper<ItemDto> {
                 rs.getString("photo"),
                 rs.getDouble("price"),
                 rs.getInt("quantity"),
-                rs.getInt("available_stock"),
-                rs.getLong("serial"));
+                rs.getInt("available_stock")
+        );
 
     }
 }

@@ -38,20 +38,15 @@ public class OrderItemResponse {
         this.totalPrice = totalPrice;
     }
 
-    public OrderItem toOrderItem() {
-        if (items != null && !items.isEmpty()) {
-            Item firstItem = items.get(0);
-            return new OrderItem(
-                    this.order.getId(),
-                    this.order.getUserId(),
-                    this.order.getId(),
-                    firstItem.getId(),
-                    firstItem.getPrice() * items.size(),
-                    items.size()
-            );
-        } else {
-            // Handle the case when items list is null or empty
-            return null;
-        }
+    public OrderItem toOrderItem(){
+        return new OrderItem(
+                this.order.getId(),
+                this.order.getUserId(),
+                this.toOrderItem().getOrderId(),
+                this.toOrderItem().getItemId(),
+                toOrderItem().getPrice(),
+                toOrderItem().getQuantity()
+        );
     }
+
 }

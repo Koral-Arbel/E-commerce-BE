@@ -2,6 +2,7 @@ package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.Order;
 import com.ecommerce.ecommerce.model.OrderDto;
+import com.ecommerce.ecommerce.repository.mapper.OrderDtoMapper;
 import com.ecommerce.ecommerce.repository.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -77,6 +78,6 @@ public class OrderRepositoryImpl implements OrderRepository {
                 "JOIN order_item oi ON o.id = oi.order_id " +
                 "JOIN item i ON oi.item_id = i.id " +
                 "WHERE o.user_id = ?";
-        return jdbcTemplate.query(sql, new Object[]{userId}, new BeanPropertyRowMapper<>(OrderDto.class));
+        return jdbcTemplate.query(sql, new Object[]{userId}, new OrderDtoMapper());
     }
 }

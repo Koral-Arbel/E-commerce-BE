@@ -29,10 +29,14 @@ public class OrderDto {
         this.item = item;
     }
 
-    public static OrderDto toOrderDto(Order order, List<ItemDto> items) {
-        OrderDto orderDto = new OrderDto();
-        orderDto.setOrder(order);
-        orderDto.setItem(items);
-        return orderDto;
+    public Order toOrder(){
+        return new Order(
+                this.order.getId(),
+                this.order.getUserId(),
+                this.order.getOrderDate(),
+                this.order.getShippingAddress(),
+                this.order.getStatus()
+        );
     }
+
 }
