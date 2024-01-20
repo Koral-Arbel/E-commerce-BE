@@ -15,4 +15,5 @@ public interface OrderItemService {
     void deleteOrderItemsByUserId(Long userId);
 
     List<OrderItem> getAllItemsByOrderId(Long orderId);
+    List<OrderDto> getAllItemsByStatus(OrderStatus status);
 }

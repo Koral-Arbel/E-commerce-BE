@@ -43,8 +43,22 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteCustomUserById(Long id) {
-        String sql = "DELETE FROM " + USER_TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(sql, id);
+        // Delete order items associated with the user
+        String deleteOrderItemsSql = "DELETE FROM order_item " +
+                "WHERE order_id IN (SELECT id FROM orders WHERE user_id = ?)";
+        jdbcTemplate.update(deleteOrderItemsSql, id);
+
+        // Delete orders associated with the user
+        String deleteOrdersSql = "DELETE FROM orders WHERE user_id = ?";
+        jdbcTemplate.update(deleteOrdersSql, id);
+
+        // Delete favorite items associated with the user
+        String deleteFavoriteItemsSql = "DELETE FROM favorite_item WHERE user_id = ?";
+        jdbcTemplate.update(deleteFavoriteItemsSql, id);
+
+        // Delete the user
+        String deleteUserSql = "DELETE FROM " + USER_TABLE_NAME + " WHERE id=?";
+        jdbcTemplate.update(deleteUserSql, id);
     }
 
     @Override

@@ -59,4 +59,10 @@ public class OrderController {
     public List<OrderDto> getOrderListsByUserId(@PathVariable Long userId) throws Exception {
         return orderService.getOrderListsByUserId(userId);
     }
+
+    @CrossOrigin
+    @GetMapping(value = "/allOrders/{userId}")
+    public List<OrderDto> getAllOrdersByUserId(@PathVariable Long userId) {
+        return orderService.getAllOrdersByUserId(userId);
+    }
 }

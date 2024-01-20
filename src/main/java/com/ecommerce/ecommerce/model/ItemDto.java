@@ -20,6 +20,7 @@ public class ItemDto {
         this.serial = serial;
     }
 
+
     public Long getId() {
         return id;
     }
@@ -74,13 +75,13 @@ public class ItemDto {
         this.serial = serial;
     }
 
-    public Item toItem(){
-        return new Item(
-                this.getId(),
-                this.getTitle(),
-                this.getPhoto(),
-                this.getPrice(),
-                getQuantity()
-        );
+    public Item toItem() {
+        Item item = new Item();
+        item.setId(this.getId());
+        item.setTitle(this.getTitle());
+        item.setPhoto(this.getPhoto());
+        item.setPrice(this.getPrice());
+        item.setAvailableStock(this.getAvailableStock());
+        return item;
     }
 }

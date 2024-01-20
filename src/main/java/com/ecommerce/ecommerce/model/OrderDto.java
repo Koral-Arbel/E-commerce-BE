@@ -28,4 +28,11 @@ public class OrderDto {
     public void setItem(List<ItemDto> item) {
         this.item = item;
     }
+
+    public static OrderDto toOrderDto(Order order, List<ItemDto> items) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrder(order);
+        orderDto.setItem(items);
+        return orderDto;
+    }
 }

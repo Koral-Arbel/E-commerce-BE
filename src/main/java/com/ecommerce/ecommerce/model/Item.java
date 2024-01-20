@@ -1,11 +1,15 @@
 package com.ecommerce.ecommerce.model;
 
+import java.util.List;
+
 public class Item {
     private Long id;
     private String title;
     private String photo;
     private Double price;
     private Integer availableStock;
+
+    public Item(){}
 
     public Item(Long id, String title, String photo, Double price, Integer availableStock) {
         this.id = id;
@@ -50,5 +54,17 @@ public class Item {
     }
     public void setAvailableStock(Integer availableStock) {
         this.availableStock = availableStock;
+    }
+
+    public ItemDto toItemDto() {
+        return new ItemDto(
+                this.getId(),
+                this.getTitle(),
+                this.getPhoto(),
+                this.getPrice(),
+                0, // Assuming quantity is not a field in Item class
+                this.getAvailableStock(),
+                null // Assuming serial is not a field in Item class
+        );
     }
 }

@@ -99,6 +99,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderDto> getAllOrdersByUserId(Long userId) {
+        return orderRepository.getAllOrdersByUserId(userId);
+    }
+
+    @Override
     public void handleOutOfStockItem(Item existingItem) {
         if (existingItem != null) {
             if (existingItem.getAvailableStock() == 0) {

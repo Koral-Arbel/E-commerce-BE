@@ -114,6 +114,11 @@
             return orderItemRepository.getAllItemsByOrderId(orderId);
         }
 
+        @Override
+        public List<OrderDto> getAllItemsByStatus(OrderStatus status) {
+            return orderItemRepository.getOrdersByStatus(status);
+        }
+
 
         private boolean isItemAlreadyInOrder(List<Item> orderItems, Long itemId) {
             return orderItems.stream().anyMatch(item -> item.getId().equals(itemId));

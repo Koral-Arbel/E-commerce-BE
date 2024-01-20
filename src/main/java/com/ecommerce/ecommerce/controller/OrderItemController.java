@@ -1,8 +1,6 @@
 package com.ecommerce.ecommerce.controller;
 
-import com.ecommerce.ecommerce.model.OrderItem;
-import com.ecommerce.ecommerce.model.OrderItemRequest;
-import com.ecommerce.ecommerce.model.OrderItemResponse;
+import com.ecommerce.ecommerce.model.*;
 import com.ecommerce.ecommerce.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,7 @@ public class OrderItemController {
         orderItemService.updateOrderItemById(orderItem.getId(), orderItem);
     }
     @CrossOrigin
-    @DeleteMapping(value = "/delete/{itemId}")
+    @DeleteMapping(value = "/deleteItem/{itemId}")
     public void deleteOrderItemById(@PathVariable Long itemId) {
         orderItemService.deleteOrderItemById(itemId);
     }
@@ -40,5 +38,11 @@ public class OrderItemController {
     @GetMapping(value = "/allOrderItems/{id}")
     public List<OrderItem> getAllItemsByOrderId(Long orderId){
         return orderItemService.getAllItemsByOrderId(orderId);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/byStatus/{status}")
+    public List<OrderDto> getOrdersByStatus(@PathVariable OrderStatus status) {
+        return orderItemService.getAllItemsByStatus(status);
     }
 }
