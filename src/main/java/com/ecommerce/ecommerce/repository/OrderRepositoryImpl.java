@@ -2,6 +2,7 @@ package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.Order;
 import com.ecommerce.ecommerce.model.OrderDto;
+import com.ecommerce.ecommerce.model.OrderStatus;
 import com.ecommerce.ecommerce.repository.mapper.OrderDtoMapper;
 import com.ecommerce.ecommerce.repository.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +67,6 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> getClosedOrderByUserId(Long userId) {
-        return null;
-    }
-
-    @Override
     public List<OrderDto> getAllOrdersByUserId(Long userId) {
         String sql = "SELECT o.id AS order_id, o.user_id, o.order_date, o.shipping_address, o.status," +
                 "i.id AS item_id, i.title, i.photo, i.price, i.available_stock, oi.quantity " +
@@ -79,5 +75,11 @@ public class OrderRepositoryImpl implements OrderRepository {
                 "JOIN item i ON oi.item_id = i.id " +
                 "WHERE o.user_id = ?";
         return jdbcTemplate.query(sql, new Object[]{userId}, new OrderDtoMapper());
+    }
+
+    @Override
+    public List<Order> getOrdersByStatus(Long userId, OrderStatus status) {
+        String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE user_id=? AND status=?";
+        return jdbcTemplate.query(sql, new OrderMapper(), userId, status.name());
     }
 }

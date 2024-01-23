@@ -45,9 +45,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrderById(Long orderId) {
-        orderRepository.deleteOrderById(orderId);
-
+    public void deleteOrderById(Long id) {
+        orderRepository.deleteOrderById(id);
     }
 
     @Override
@@ -57,28 +56,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderItemResponse> getOrderListByUserId(Long userId) throws Exception {
-        if (userId != null){
-            CustomUser customUser = userService.getCustomUserById(userId);
-            if (customUser != null){
-                List<OrderItemResponse> orderListsToResponse = new ArrayList<>();
-                List<Order> orders = orderRepository.getClosedOrderByUserId(userId);
-                if (orders != null && !orders.isEmpty()){
-                    for (int i = 0 ; i < orders.size(); i ++){
-                        OrderItemResponse userOrderList = new OrderItemResponse();
-                        userOrderList.setOrder(orders.get(i));
-                        userOrderList.setItems(orderItemService.getAllOrderItemsByOrderId(userOrderList.getOrder().getId()));
-                        orderListsToResponse.add(userOrderList);
-                    }
-                    return orderListsToResponse;
-                }else {
-                    return orderListsToResponse;
-                }
-            }else {
-                throw new Exception("customer with this id not exist");
+        List<OrderItemResponse> orderListsToResponse = new ArrayList<>();
+
+        // Fetch orders with status TEMP
+        List<Order> openOrders = orderRepository.getOrdersByStatus(userId, OrderStatus.TEMP);
+
+        if (openOrders != null && !openOrders.isEmpty()) {
+            for (Order openOrder : openOrders) {
+                OrderItemResponse userOrderList = new OrderItemResponse();
+                userOrderList.setOrder(openOrder);
+                userOrderList.setItems(orderItemService.getAllOrderItemsByOrderId(userOrderList.getOrder().getId()));
+                orderListsToResponse.add(userOrderList);
             }
-        }else {
-            throw new Exception("no customer id");
-        }    }
+        }
+
+        return orderListsToResponse;
+    }
 
     @Override
     public Long getOpenOrderForUserId(Long userId) {
@@ -86,9 +79,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getClosedOrderByUserId(Long userId) {
-        return orderRepository.getClosedOrderByUserId(userId);
+    public List<OrderDto> getClosedOrderByUserId(Long userId) throws Exception {
+        List<OrderDto> orderListsToResponse = new ArrayList<>();
 
+        // Fetch orders with status CLOSE
+        List<Order> closedOrders = orderRepository.getOrdersByStatus(userId, OrderStatus.CLOSE);
+
+        if (closedOrders != null && !closedOrders.isEmpty()) {
+            for (Order closedOrder : closedOrders) {
+                OrderDto userOrderList = new OrderDto();
+                userOrderList.setOrder(closedOrder);
+                userOrderList.setItem(orderItemService.getAllOrderItemsByUserId(userOrderList.getOrder().getId()));
+                orderListsToResponse.add(userOrderList);
+            }
+        }
+        return orderListsToResponse;
     }
 
     @Override
@@ -126,7 +131,7 @@ public class OrderServiceImpl implements OrderService {
             CustomUser customUser = userService.getCustomUserById(userId);
             if (customUser != null){
                 List<OrderDto> orderListsToResponse = new ArrayList<>();
-                List<Order> orders = orderRepository.getClosedOrderByUserId(userId);
+                List<Order> orders = orderRepository.getOrdersByStatus(userId, OrderStatus.CLOSE);
                 if (orders != null && !orders.isEmpty()){
                     for (int i = 0 ; i < orders.size(); i ++){
                         OrderDto userOrderList = new OrderDto();
