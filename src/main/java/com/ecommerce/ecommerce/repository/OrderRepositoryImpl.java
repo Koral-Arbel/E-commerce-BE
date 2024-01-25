@@ -7,7 +7,6 @@ import com.ecommerce.ecommerce.repository.mapper.OrderDtoMapper;
 import com.ecommerce.ecommerce.repository.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +15,8 @@ import java.util.List;
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {
     private static final String ORDER_TABLE_NAME = "orders";
+    private static final String ORDER_ITEM_TABLE_NAME = "order_item";
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -84,8 +85,8 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public void deleteOrdersByCustomerId(Long customerId) {
-        String sql = "DELETE FROM " + ORDER_TABLE_NAME + " WHERE user_id=?";
-        jdbcTemplate.update(sql, customerId);
+    public void deleteOrdersByUserId(Long id, Long userId) {
+        jdbcTemplate.update("DELETE FROM " + ORDER_ITEM_TABLE_NAME + " WHERE order_id = ?",id);
+        jdbcTemplate.update("DELETE FROM " + ORDER_TABLE_NAME + " WHERE id=?", id);
     }
 }

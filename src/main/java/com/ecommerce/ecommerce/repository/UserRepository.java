@@ -9,7 +9,7 @@ public interface UserRepository {
     void createUser(CustomUser customUser);
     CustomUser getCustomUserById(Long id);
     void updateCustomUserById(Long userId, CustomUser customUser);
-    void deleteCustomUserById(Long id);
+    void deleteCustomUserById(Long id) throws Exception;
 
     CustomUser findUserByUsername(String username);
     CustomUser findUserByEmail(String email);

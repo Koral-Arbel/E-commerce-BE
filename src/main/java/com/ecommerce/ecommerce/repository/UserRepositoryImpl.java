@@ -43,25 +43,31 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteCustomUserById(Long id) {
-        try {
-            // Delete order items associated with the user
-            String deleteOrderItemsSql = "DELETE FROM " + ORDER_ITEM_TABLE_NAME + " WHERE order_id IN (SELECT id FROM " + ORDER_TABLE_NAME + " WHERE user_id=?)";
-            jdbcTemplate.update(deleteOrderItemsSql, id);
+    public void deleteCustomUserById(Long id) throws Exception {
+        if (id != null){
+            CustomUser deleteCustomUser = getCustomUserById(id);
+            if (deleteCustomUser != null){
 
-            // Delete orders associated with the user
-            String deleteOrdersSql = "DELETE FROM " + ORDER_TABLE_NAME + " WHERE user_id=?";
-            jdbcTemplate.update(deleteOrdersSql, id);
+                // Delete orders associated with the user
+                String deleteOrdersSql = "DELETE FROM " + ORDER_TABLE_NAME + " WHERE user_id=?";
+                jdbcTemplate.update(deleteOrdersSql, id);
 
-            // Delete favorite items associated with the user
-            String deleteFavoriteItemsSql = "DELETE FROM " + FAVORITE_ITEM_TABLE_NAME + " WHERE user_id=?";
-            jdbcTemplate.update(deleteFavoriteItemsSql, id);
+                // Delete order items associated with the user
+                String deleteOrderItemsSql = "DELETE FROM " + ORDER_ITEM_TABLE_NAME + " WHERE user_id=?";
+                jdbcTemplate.update(deleteOrderItemsSql, id);
 
-            // Delete the user
-            String deleteUserSql = "DELETE FROM " + USER_TABLE_NAME + " WHERE id=?";
-            jdbcTemplate.update(deleteUserSql, id);
-        } catch (Exception e) {
-            e.printStackTrace();
+                // Delete favorite items associated with the user
+                String deleteFavoriteItemsSql = "DELETE FROM " + FAVORITE_ITEM_TABLE_NAME + " WHERE user_id=?";
+                jdbcTemplate.update(deleteFavoriteItemsSql, id);
+
+                // Delete the user
+                String deleteUserSql = "DELETE FROM " + USER_TABLE_NAME + " WHERE id=?";
+                jdbcTemplate.update(deleteUserSql, id);
+            } else {
+                throw new Exception("No such customer with this id " + id);
+            }
+        } else {
+            throw new Exception("Id is null");
         }
     }
 

@@ -22,5 +22,5 @@ public interface OrderService {
 
     List<OrderDto> getOrderListsByUserId(Long userId) throws Exception;
 
-    void deleteOrdersByUserId(Long userId);
+    void deleteOrdersByUserId(Long id,Long userId);
 }

@@ -150,8 +150,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrdersByUserId(Long userId) {
-        orderRepository.deleteOrdersByCustomerId(userId);
+    public void deleteOrdersByUserId(Long id, Long userId) {
+        orderRepository.deleteOrdersByUserId(id, userId);
     }
 }
 
