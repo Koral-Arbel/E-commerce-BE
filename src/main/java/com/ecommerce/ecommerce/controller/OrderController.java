@@ -1,8 +1,6 @@
 package com.ecommerce.ecommerce.controller;
 
-import com.ecommerce.ecommerce.model.Order;
-import com.ecommerce.ecommerce.model.OrderDto;
-import com.ecommerce.ecommerce.model.OrderItem;
+import com.ecommerce.ecommerce.model.*;
 import com.ecommerce.ecommerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,14 +21,14 @@ public class OrderController {
        return orderService.createOrder(order);
     }
     @CrossOrigin
-    @PutMapping(value = "/update")
-    public void updateOrder(@RequestBody Order order, @RequestBody List<OrderItem>orderItems) {
+    @PutMapping(value = "{id}/update")
+    public void updateOrderById(@RequestBody Order order, @RequestBody List<OrderItem>orderItems) {
         orderService.updateOrderById(order);
     }
     @CrossOrigin
-    @DeleteMapping(value = "/delete/{orderId}")
-    public void deleteOrderById(@PathVariable Long orderId) {
-        orderService.deleteOrderById(orderId);
+    @DeleteMapping(value = "/delete/{id}")
+    public void deleteOrderById(@PathVariable Long id) {
+        orderService.deleteOrderById(id);
     }
     @CrossOrigin
     @GetMapping(value = "/orderTemp/{userId}")
@@ -43,6 +41,11 @@ public class OrderController {
         return orderService.getOpenOrderForUserId(userId);
     }
 
+    @CrossOrigin
+    @GetMapping(value = "/byStatus/{status}")
+    public List<Order> getOrdersByStatus(@PathVariable Long userId, @PathVariable OrderStatus status) {
+        return orderService.getAllItemsByStatus(userId, status);
+    }
     @CrossOrigin
     @PostMapping(value = "/processPayment/{orderId}")
     public ResponseEntity<String> processPayment(@PathVariable Long orderId) {

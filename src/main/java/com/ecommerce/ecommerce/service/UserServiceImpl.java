@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
         if (id != null){
             CustomUser deleteCustomUser = userRepository.getCustomUserById(id);
             if (deleteCustomUser != null){
-                orderService.deleteOrdersByUserId(id, id);
                 orderItemService.deleteOrderItemsByUserId(id);
+                orderService.deleteOrdersByUserId(id, id);
                 favoriteItemService.deleteAllItemFromFavoriteByUserId(id);
                 userRepository.deleteCustomUserById(id);
             }else{

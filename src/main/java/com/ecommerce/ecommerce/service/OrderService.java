@@ -23,4 +23,6 @@ public interface OrderService {
     List<OrderDto> getOrderListsByUserId(Long userId) throws Exception;
 
     void deleteOrdersByUserId(Long id,Long userId);
+
+    List<Order> getAllItemsByStatus(Long userId, OrderStatus status);
 }

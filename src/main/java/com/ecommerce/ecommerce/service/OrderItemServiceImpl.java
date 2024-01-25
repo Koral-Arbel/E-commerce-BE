@@ -96,12 +96,10 @@
 
         @Override
         public void updateOrderIdByUserId(Long userId, Long orderId) {
-
         }
 
         @Override
         public void deleteOrderItemsByUserId(Long userId) {
-
         }
 
         @Override
@@ -112,11 +110,6 @@
         @Override
         public List<OrderItem> getAllItemsByOrderId(Long orderId) {
             return orderItemRepository.getAllItemsByOrderId(orderId);
-        }
-
-        @Override
-        public List<OrderDto> getAllItemsByStatus(OrderStatus status) {
-            return orderItemRepository.getOrdersByStatus(status);
         }
 
 

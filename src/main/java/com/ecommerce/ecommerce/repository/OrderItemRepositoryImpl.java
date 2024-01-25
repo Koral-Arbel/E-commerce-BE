@@ -10,7 +10,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,7 +90,7 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
 
     @Override
     public void processPayment(Long orderId) {
-        String updateQuery = "UPDATE orders SET status = 'CLOSE' WHERE id = ?";
+        String updateQuery = "UPDATE " +  ORDER_TABLE_NAME + " SET status = 'CLOSE' WHERE id = ?";
         jdbcTemplate.update(updateQuery, orderId);
     }
 }

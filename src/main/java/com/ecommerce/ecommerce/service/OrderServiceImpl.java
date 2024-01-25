@@ -107,6 +107,11 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getAllOrdersByUserId(Long userId) {
         return orderRepository.getAllOrdersByUserId(userId);
     }
+    @Override
+    public List<Order> getAllItemsByStatus(Long userId, OrderStatus status) {
+
+        return orderRepository.getOrdersByStatus(userId, status);
+    }
 
     @Override
     public void handleOutOfStockItem(Item existingItem) {

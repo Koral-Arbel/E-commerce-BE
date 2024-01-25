@@ -77,7 +77,11 @@ INSERT INTO item (title,photo,price,available_stock) VALUES
 ('AirPods Pro', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTJV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1694014871985',249.99, 13),
 ('Beats Fit Pro True Wireless Earbuds Coral Pink', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MPLJ3_AV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1674696408547',199.99, 2),
 ('Beats Fit Pro True Wireless Earbuds Tidal Blue', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MPLL3_AV2?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1674696409340',199.99, 2),
-('AirTag', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-single-select-202104_FV1?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761670000',29.99, 11);
+('AirTag', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-single-select-202104_FV1?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761670000',29.99, 11),
+('HomePod Midnight', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/homepod-select-midnight-202210?wid=470&hei=556&fmt=png-alpha&.v=1670557210097', 299.99, 1),
+('HomePod mini', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/homepod-mini-select-orange-202110_FV1?wid=934&hei=440&fmt=jpeg&qlt=95&.v=1633086020000', 99.99, 1);
+
+
 
 
 INSERT INTO custom_user (first_name, last_name, email, phone, full_address, username, password, active, roles, permissions)

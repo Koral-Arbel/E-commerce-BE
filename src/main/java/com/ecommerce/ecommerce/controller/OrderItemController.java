@@ -19,7 +19,7 @@ public class OrderItemController {
         return orderItemService.createOrderItem(orderItemRequest);
     }
     @CrossOrigin
-    @PutMapping(value = "/update")
+    @PutMapping(value = "{id}/update")
     public void updateOrderItemById( @RequestBody OrderItem orderItem) {
         orderItemService.updateOrderItemById(orderItem.getId(), orderItem);
     }
@@ -38,11 +38,5 @@ public class OrderItemController {
     @GetMapping(value = "/allOrderItems/{id}")
     public List<OrderItem> getAllItemsByOrderId(Long orderId){
         return orderItemService.getAllItemsByOrderId(orderId);
-    }
-
-    @CrossOrigin
-    @GetMapping(value = "/byStatus/{status}")
-    public List<OrderDto> getOrdersByStatus(@PathVariable OrderStatus status) {
-        return orderItemService.getAllItemsByStatus(status);
     }
 }
