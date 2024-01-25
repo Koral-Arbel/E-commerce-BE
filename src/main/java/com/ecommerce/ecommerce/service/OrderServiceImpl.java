@@ -148,6 +148,11 @@ public class OrderServiceImpl implements OrderService {
             throw new Exception("no customer id");
         }
     }
+
+    @Override
+    public void deleteOrdersByUserId(Long userId) {
+        orderRepository.deleteOrdersByCustomerId(userId);
+    }
 }
 
 

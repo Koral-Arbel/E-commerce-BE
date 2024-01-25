@@ -82,4 +82,10 @@ public class OrderRepositoryImpl implements OrderRepository {
         String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE user_id=? AND status=?";
         return jdbcTemplate.query(sql, new OrderMapper(), userId, status.name());
     }
+
+    @Override
+    public void deleteOrdersByCustomerId(Long customerId) {
+        String sql = "DELETE FROM " + ORDER_TABLE_NAME + " WHERE user_id=?";
+        jdbcTemplate.update(sql, customerId);
+    }
 }

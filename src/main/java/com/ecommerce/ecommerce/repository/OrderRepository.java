@@ -14,5 +14,6 @@ public interface OrderRepository {
     Long getOpenOrderForUserId(Long userId);
     List<OrderDto> getAllOrdersByUserId(Long userId);
     List<Order> getOrdersByStatus(Long userId, OrderStatus status);
+    void deleteOrdersByCustomerId(Long customerId);
 
 }

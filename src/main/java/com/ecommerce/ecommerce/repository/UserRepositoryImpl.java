@@ -1,22 +1,18 @@
 package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.CustomUser;
-import com.ecommerce.ecommerce.model.Item;
 import com.ecommerce.ecommerce.repository.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
     private static final String USER_TABLE_NAME = "custom_user";
     private static final String ORDER_TABLE_NAME = "orders";
     private static final String FAVORITE_ITEM_TABLE_NAME = "favorite_item";
-    private static final String ORDER_ITEM_ITEM_TABLE_NAME = "order_item";
+    private static final String ORDER_ITEM_TABLE_NAME = "order_item";
 
 
     @Autowired
@@ -50,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void deleteCustomUserById(Long id) {
         try {
             // Delete order items associated with the user
-            String deleteOrderItemsSql = "DELETE FROM order_item WHERE order_id IN (SELECT id FROM orders WHERE user_id=?)";
+            String deleteOrderItemsSql = "DELETE FROM " + ORDER_ITEM_TABLE_NAME + " WHERE order_id IN (SELECT id FROM " + ORDER_TABLE_NAME + " WHERE user_id=?)";
             jdbcTemplate.update(deleteOrderItemsSql, id);
 
             // Delete orders associated with the user

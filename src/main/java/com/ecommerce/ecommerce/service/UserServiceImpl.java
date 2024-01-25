@@ -53,9 +53,9 @@ public class UserServiceImpl implements UserService {
         if (id != null){
             CustomUser deleteCustomUser = userRepository.getCustomUserById(id);
             if (deleteCustomUser != null){
-                favoriteItemService.deleteAllItemFromFavoriteByUserId(id);
                 orderItemService.deleteOrderItemsByUserId(id);
-                orderService.deleteOrderById(id);
+                orderService.deleteOrdersByUserId(id);
+                favoriteItemService.deleteAllItemFromFavoriteByUserId(id);
                 userRepository.deleteCustomUserById(id);
             }else{
                 throw new Exception("No such customer with this id " + id);
