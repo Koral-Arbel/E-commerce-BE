@@ -3,7 +3,6 @@ package com.ecommerce.ecommerce.repository;
 import com.ecommerce.ecommerce.model.FavoriteItem;
 import com.ecommerce.ecommerce.model.Item;
 import com.ecommerce.ecommerce.repository.mapper.FavoriteItemMapper;
-import com.ecommerce.ecommerce.repository.mapper.ItemDtoMapper;
 import com.ecommerce.ecommerce.repository.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -44,9 +43,9 @@ public class FavoriteItemRepositoryImpl implements FavoriteItemRepository {
     }
 
     @Override
-    public void removeFromFavorites(Long id) {
-        String sql = "DELETE FROM " + FAVORITE_ITEM_TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(sql, id);
+    public void removeItemFromFavorites(Long itemId) {
+        String sql = "DELETE FROM " + FAVORITE_ITEM_TABLE_NAME + " WHERE item_id=?";
+        jdbcTemplate.update(sql, itemId);
     }
 
     @Override

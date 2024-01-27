@@ -28,6 +28,12 @@ public class FavoriteItemController {
     public FavoriteItem getFavoriteItemListById(@PathVariable Long id){
         return favoriteItemService.getFavoriteItemListById(id);
     }
+
+    @CrossOrigin
+    @DeleteMapping(value = "/deleteItem/{itemId}")
+    public void removeItemFromFavorites(@PathVariable Long itemId) {
+        favoriteItemService.removeItemFromFavorites(itemId);
+    }
     @CrossOrigin
     @DeleteMapping(value = "/{id}/delete")
     public void deleteFavoriteItemById(@PathVariable Long id) {

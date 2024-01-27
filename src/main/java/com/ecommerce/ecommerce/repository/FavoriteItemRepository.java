@@ -9,7 +9,7 @@ public interface FavoriteItemRepository {
     Long createItemAddToFavorites(FavoriteItem favoriteItem);
     void updateFavorites(Long id, FavoriteItem favoriteItem);
     FavoriteItem getFavoriteItemListById(Long id);
-    void removeFromFavorites(Long id);
+    void removeItemFromFavorites(Long itemId);
     void deleteAllItemFromFavoriteByUserId(Long userId);
     List<Item> getFavoriteItemsByUserId(Long userId);
 

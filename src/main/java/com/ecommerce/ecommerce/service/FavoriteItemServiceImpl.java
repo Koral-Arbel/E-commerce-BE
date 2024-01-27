@@ -54,8 +54,13 @@ public class FavoriteItemServiceImpl implements FavoriteItemService {
     }
 
     @Override
+    public void removeItemFromFavorites(Long itemId) {
+        favoriteItemRepository.removeItemFromFavorites(itemId);
+    }
+
+    @Override
     public void deleteFavoriteItemById(Long id) {
-        favoriteItemRepository.removeFromFavorites(id);
+        favoriteItemRepository.removeItemFromFavorites(id);
     }
 
     @Override

@@ -11,6 +11,7 @@ public interface FavoriteItemService {
     void updateFavoriteById(Long id, FavoriteItem favoriteItem);
 
     FavoriteItem getFavoriteItemListById(Long userId);
+    void removeItemFromFavorites(Long itemId);
 
     void deleteFavoriteItemById(Long id);
 
