@@ -9,7 +9,9 @@ public class OrderItem {
     private Long itemId;
     private Double price;
     private int quantity;
-    public OrderItem() {}
+
+    public OrderItem() {
+    }
 
     public OrderItem(Long id, Long userId, Long orderId, Long itemId, Double price, int quantity) {
         this.id = id;
@@ -44,6 +46,7 @@ public class OrderItem {
     public int getQuantity() {
         return quantity;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -72,7 +75,11 @@ public class OrderItem {
         return getPrice() * getQuantity();
     }
 
-    public OrderItemResponse toOrderItemResponse(Order order, List<Item> items, Double totalPrice) {
-        return new OrderItemResponse(order, items, totalPrice);
+    public OrderItemResponse toOrderResponse(Order order, List<Item> orderItems, Double totalPrice) {
+        return new OrderItemResponse(
+                order,
+                orderItems,
+                totalPrice
+        );
     }
 }

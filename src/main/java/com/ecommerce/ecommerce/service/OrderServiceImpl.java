@@ -16,7 +16,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
-    UserRepository userRepository;
+    OrderService orderService;
     @Autowired
     UserService userService;
     @Autowired
@@ -101,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.getOrderById(orderId);
         order.setStatus(OrderStatus.CLOSE);
         orderRepository.updateOrderById(order);
-    }
+}
 
     @Override
     public List<OrderDto> getAllOrdersByUserId(Long userId) {
@@ -123,11 +123,6 @@ public class OrderServiceImpl implements OrderService {
         } else {
             throw new IllegalArgumentException("Existing item is null");
         }
-    }
-
-    @Override
-    public Double calculateTotalPrice(Order order) {
-        return calculateTotalPrice(order);
     }
 
     @Override
@@ -157,6 +152,37 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrdersByUserId(Long id, Long userId) {
         orderRepository.deleteOrdersByUserId(id, userId);
+    }
+
+    private Double calculateTotalPrice(List<OrderItem> orderItems) {
+        double totalPrice = 0.0;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getQuantity() * orderItem.getPrice();
+        }
+        return totalPrice;
+    }
+
+    private void updateAvailableStock(Long itemId, Integer availableStock) {
+        Item existingItem = itemRepository.getItemById(itemId);
+
+        if (existingItem != null) {
+            // בדיקה אם יש מלאי זמין
+            if (availableStock < 0) {
+                throw new IllegalArgumentException("Cannot set negative stock for item with id " + itemId);
+            }
+
+            // שמירת השינויים בבסיס הנתונים
+            itemRepository.updateAvailableStock(existingItem.getId(), availableStock);
+
+            // בדיקה אם המוצר אזל מהמלאי
+            if (availableStock == 0) {
+                // כאן ניתן להוסיף לוגיקה נוספת או להתממשק עם שירותים נוספים כדי לטפל במצב שבו המוצר אזל מהמלאי
+                orderService.handleOutOfStockItem(existingItem);
+            }
+        } else {
+            // אם המוצר לא נמצא, ניתן להכניס לוג רלוונטי או לטפל בדרך אחרת
+            throw new IllegalArgumentException("Item with id " + itemId + " not found");
+        }
     }
 }
 

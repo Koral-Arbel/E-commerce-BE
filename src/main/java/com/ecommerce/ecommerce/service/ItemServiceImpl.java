@@ -21,7 +21,7 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public void updateItemById(Item item) {
-        updateItemById(item);
+        itemRepository.updateItemById(item);
     }
 
     @Override
@@ -44,16 +44,13 @@ public class ItemServiceImpl implements ItemService{
                 throw new IllegalArgumentException("Cannot set negative stock for item with id " + itemId);
             }
 
-            // עדכון כמות המלאי
-            existingItem.setAvailableStock(availableStock);
-
             // שמירת השינויים בבסיס הנתונים
             itemRepository.updateAvailableStock(itemId, availableStock);
 
             // בדיקה אם המוצר אזל מהמלאי
             if (availableStock == 0) {
                 // כאן ניתן להוסיף לוגיקה נוספת או להתממשק עם שירותים נוספים כדי לטפל במצב שבו המוצר אזל מהמלאי
-                 orderService.handleOutOfStockItem(existingItem);
+                orderService.handleOutOfStockItem(existingItem);
             }
         } else {
             // אם המוצר לא נמצא, ניתן להכניס לוג רלוונטי או לטפל בדרך אחרת

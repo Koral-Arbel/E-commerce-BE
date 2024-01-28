@@ -18,8 +18,6 @@ public interface OrderService {
     List<OrderDto> getAllOrdersByUserId(Long userId);
 
     void handleOutOfStockItem(Item existingItem);
-    Double calculateTotalPrice(Order order);
-
     List<OrderDto> getOrderListsByUserId(Long userId) throws Exception;
 
     void deleteOrdersByUserId(Long id,Long userId);
