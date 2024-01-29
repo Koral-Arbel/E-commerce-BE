@@ -65,10 +65,9 @@ public class Order {
         return orderItems.stream().mapToDouble(orderItem -> orderItem.getPrice() * orderItem.getQuantity()).sum();
     }
 
-    public OrderDto toOrderResponse(Order order, List<ItemDto> orderItems) {
-        return new OrderDto(
-                order,
-                orderItems
-        );
+    public OrderDto toOrderResponse(Long orderId, Long userId, LocalDateTime orderDate, String shippingAddress, OrderStatus status, List<ItemDto> orderItems) {
+        Order order = new Order(orderId, userId, orderDate, shippingAddress, status);
+        return new OrderDto(order, orderItems);
     }
+
 }
