@@ -50,10 +50,11 @@ public class FavoriteItemRepositoryImpl implements FavoriteItemRepository {
 
     @Override
     public void deleteAllItemFromFavoriteByUserId(Long userId) {
-        String sql = "DELETE FROM " + FAVORITE_ITEM_TABLE_NAME + " WHERE user_id=?";
-        jdbcTemplate.update(sql, userId);
-
+            String sql = "DELETE FROM " + FAVORITE_ITEM_TABLE_NAME + " WHERE user_id=?";
+            jdbcTemplate.update(sql, userId);
     }
+
+
     @Override
     public List<Item> getFavoriteItemsByUserId(Long userId) {
         String sql = "SELECT " + ITEM_TABLE_NAME + ".*, " + FAVORITE_ITEM_TABLE_NAME + ".id FROM " + ITEM_TABLE_NAME +

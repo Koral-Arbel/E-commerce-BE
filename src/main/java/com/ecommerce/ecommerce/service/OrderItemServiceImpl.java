@@ -20,12 +20,11 @@
             if (orderItemRequest == null) {
                 throw new IllegalArgumentException("OrderItemRequest is null");
             }
-            // Retrieve item information
             Item itemInformation = itemService.getItemById(orderItemRequest.getItemId());
             if (itemInformation == null) {
                 throw new IllegalArgumentException("Item with id " + orderItemRequest.getItemId() + " not found");
             }
-            // Check item availability
+
             if (itemInformation.getAvailableStock() == 0) {
                 throw new IllegalArgumentException("Item is not available in stock");
             }
@@ -36,10 +35,8 @@
                 Order newOrder = new Order(null, orderItemRequest.getUserId(), date, null, OrderStatus.TEMP);
                 orderId = orderService.createOrder(newOrder);
             }
-
             Order openOrder = orderService.getOrderById(orderId);
 
-            // Check if the item already exists in the order
             List<Item> orderItems = itemService.getItemsByOrderId(orderId);
             if (isItemAlreadyInOrder(orderItems, orderItemRequest.getItemId())) {
                 throw new IllegalArgumentException("Item is already in the order");
@@ -54,23 +51,14 @@
                     orderItemRequest.getQuantity()
             );
 
-            // Update item availability and create the order item
-            itemService.updateAvailableStock(itemInformation.getId(), itemInformation.getAvailableStock() - 1);
             orderItemRepository.createOrderItem(orderItem);
             orderService.updateOrderById(openOrder);
-
-            // Retrieve updated order items
             orderItems = itemService.getItemsByOrderId(orderId);
-
-            // Calculate total price dynamically
             Double totalPrice = orderItems.stream()
                     .mapToDouble(item -> item.getPrice() * orderItem.getQuantity())
                     .sum();
-
-            // Update the response DTO with the total price
             orderItem.calculateSubtotal();
 
-            // Create the response DTO
             OrderItemResponse orderItemResponse = new OrderItemResponse(openOrder, orderItems, totalPrice);
             return orderItemResponse;
         }

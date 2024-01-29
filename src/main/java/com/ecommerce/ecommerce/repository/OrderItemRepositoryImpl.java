@@ -71,26 +71,4 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
 
         }
     }
-
-    @Override
-    public List<OrderDto> getOrdersByStatus(OrderStatus status) {
-        String sql = "SELECT * FROM " + ORDER_TABLE_NAME + " WHERE status=?";
-        List<Order> orders = jdbcTemplate.query(sql, orderMapper, status.toString());
-
-        return orders.stream()
-                .map(order -> {
-                    List<ItemDto> itemDtos = itemService.getItemsByOrderId(order.getId())
-                            .stream()
-                            .map(Item::toItemDto)
-                            .collect(Collectors.toList()); // Use toItemDto method of Item class
-                    return new OrderDto(order, itemDtos);
-                })
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public void processPayment(Long orderId) {
-        String updateQuery = "UPDATE " +  ORDER_TABLE_NAME + " SET status = 'CLOSE' WHERE id = ?";
-        jdbcTemplate.update(updateQuery, orderId);
-    }
 }

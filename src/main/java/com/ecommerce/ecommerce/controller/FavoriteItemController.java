@@ -35,7 +35,7 @@ public class FavoriteItemController {
         favoriteItemService.removeItemFromFavorites(itemId);
     }
     @CrossOrigin
-    @DeleteMapping(value = "/{id}/delete")
+    @DeleteMapping(value = "/{userId}/delete")
     public void deleteFavoriteItemById(@PathVariable Long id) {
         favoriteItemService.deleteFavoriteItemById(id);
     }

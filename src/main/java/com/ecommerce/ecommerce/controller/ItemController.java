@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.controller;
 
 import com.ecommerce.ecommerce.model.Item;
+import com.ecommerce.ecommerce.model.ItemDto;
 import com.ecommerce.ecommerce.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,6 @@ public class ItemController {
     @CrossOrigin
     @GetMapping(value = "/searchItems")
     public List<Item> searchItems(@RequestParam String title) {
-        // חיפוש ברשימת הפריטים והחזרת רשימת התוצאות
         return getAllItems().stream()
                 .filter(item -> item.getTitle().toLowerCase().contains(title.toLowerCase()))
                 .collect(Collectors.toList());

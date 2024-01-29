@@ -100,8 +100,17 @@ public class OrderServiceImpl implements OrderService {
     public void processPayment(Long orderId) {
         Order order = orderRepository.getOrderById(orderId);
         order.setStatus(OrderStatus.CLOSE);
-        orderRepository.updateOrderById(order);
-}
+        if (order.getStatus() == OrderStatus.CLOSE) {
+            // Retrieve updated order items
+            List<Item> orderItems = itemRepository.getItemsByOrderId(orderId);
+
+            // Iterate through order items and update stock only if the new status is CLOSE
+            for (Item item : orderItems) {
+                itemRepository.updateAvailableStock(item.getId(), item.getAvailableStock() - 1);
+            }
+            orderRepository.updateOrderById(order);
+        }
+    }
 
     @Override
     public List<OrderDto> getAllOrdersByUserId(Long userId) {
