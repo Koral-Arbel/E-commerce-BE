@@ -30,7 +30,6 @@ public class FavoriteItemServiceImpl implements FavoriteItemService {
                 }
                 if (isFound) {
                     throw new Exception("item already in favorite List");
-
                 } else {
                     return favoriteItemRepository.createItemAddToFavorites(favoriteItem);
                 }
@@ -40,7 +39,6 @@ public class FavoriteItemServiceImpl implements FavoriteItemService {
         }else {
             throw new Exception("no favorite item list to add");
         }
-
     }
 
     @Override

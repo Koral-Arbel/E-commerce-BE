@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.Item;
-import com.ecommerce.ecommerce.repository.mapper.ItemDtoMapper;
 import com.ecommerce.ecommerce.repository.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -43,7 +42,6 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public Item getItemById(Long id) {
-        ItemMapper itemMapper = new ItemMapper();
         String sql = "SELECT * FROM " + ITEM_TABLE_NAME + " WHERE id=?";
         try {
             return jdbcTemplate.queryForObject(sql, new ItemMapper(), id);

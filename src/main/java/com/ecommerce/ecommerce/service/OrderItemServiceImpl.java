@@ -24,24 +24,20 @@
             if (itemInformation == null) {
                 throw new IllegalArgumentException("Item with id " + orderItemRequest.getItemId() + " not found");
             }
-
             if (itemInformation.getAvailableStock() == 0) {
                 throw new IllegalArgumentException("Item is not available in stock");
             }
             Long orderId = orderService.getOpenOrderForUserId(orderItemRequest.getUserId());
-
             if (orderId == null) {
                 LocalDateTime date = LocalDateTime.now();
                 Order newOrder = new Order(null, orderItemRequest.getUserId(), date, null, OrderStatus.TEMP);
                 orderId = orderService.createOrder(newOrder);
             }
             Order openOrder = orderService.getOrderById(orderId);
-
             List<Item> orderItems = itemService.getItemsByOrderId(orderId);
             if (isItemAlreadyInOrder(orderItems, orderItemRequest.getItemId())) {
                 throw new IllegalArgumentException("Item is already in the order");
             }
-
             OrderItem orderItem = new OrderItem(
                     null,
                     orderItemRequest.getUserId(),
@@ -50,7 +46,6 @@
                     itemInformation.getPrice(),
                     orderItemRequest.getQuantity()
             );
-
             orderItemRepository.createOrderItem(orderItem);
             orderService.updateOrderById(openOrder);
             orderItems = itemService.getItemsByOrderId(orderId);
@@ -58,7 +53,6 @@
                     .mapToDouble(item -> item.getPrice() * orderItem.getQuantity())
                     .sum();
             orderItem.calculateSubtotal();
-
             OrderItemResponse orderItemResponse = new OrderItemResponse(openOrder, orderItems, totalPrice);
             return orderItemResponse;
         }

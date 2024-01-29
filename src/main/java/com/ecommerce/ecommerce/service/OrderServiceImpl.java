@@ -57,10 +57,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderItemResponse> getOrderListByUserId(Long userId) throws Exception {
         List<OrderItemResponse> orderListsToResponse = new ArrayList<>();
-
-        // Fetch orders with status TEMP
         List<Order> openOrders = orderRepository.getOrdersByStatus(userId, OrderStatus.TEMP);
-
         if (openOrders != null && !openOrders.isEmpty()) {
             for (Order openOrder : openOrders) {
                 OrderItemResponse userOrderList = new OrderItemResponse();
@@ -81,10 +78,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getClosedOrderByUserId(Long userId) throws Exception {
         List<OrderDto> orderListsToResponse = new ArrayList<>();
-
-        // Fetch orders with status CLOSE
         List<Order> closedOrders = orderRepository.getOrdersByStatus(userId, OrderStatus.CLOSE);
-
         if (closedOrders != null && !closedOrders.isEmpty()) {
             for (Order closedOrder : closedOrders) {
                 OrderDto userOrderList = new OrderDto();
@@ -101,10 +95,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.getOrderById(orderId);
         order.setStatus(OrderStatus.CLOSE);
         if (order.getStatus() == OrderStatus.CLOSE) {
-            // Retrieve updated order items
             List<Item> orderItems = itemRepository.getItemsByOrderId(orderId);
-
-            // Iterate through order items and update stock only if the new status is CLOSE
             for (Item item : orderItems) {
                 itemRepository.updateAvailableStock(item.getId(), item.getAvailableStock() - 1);
             }
@@ -126,7 +117,6 @@ public class OrderServiceImpl implements OrderService {
     public void handleOutOfStockItem(Item existingItem) {
         if (existingItem != null) {
             if (existingItem.getAvailableStock() == 0) {
-                // אם כמות המלאי ירדה ל-0, ניתן להוסיף פעולות נוספות כגון שליחת הודעה או יצירת לוג
                 System.out.println("Item with id " + existingItem.getId() + " is out of stock.");
             }
         } else {
@@ -173,23 +163,16 @@ public class OrderServiceImpl implements OrderService {
 
     private void updateAvailableStock(Long itemId, Integer availableStock) {
         Item existingItem = itemRepository.getItemById(itemId);
-
         if (existingItem != null) {
-            // בדיקה אם יש מלאי זמין
             if (availableStock < 0) {
                 throw new IllegalArgumentException("Cannot set negative stock for item with id " + itemId);
             }
-
-            // שמירת השינויים בבסיס הנתונים
             itemRepository.updateAvailableStock(existingItem.getId(), availableStock);
 
-            // בדיקה אם המוצר אזל מהמלאי
             if (availableStock == 0) {
-                // כאן ניתן להוסיף לוגיקה נוספת או להתממשק עם שירותים נוספים כדי לטפל במצב שבו המוצר אזל מהמלאי
                 orderService.handleOutOfStockItem(existingItem);
             }
         } else {
-            // אם המוצר לא נמצא, ניתן להכניס לוג רלוונטי או לטפל בדרך אחרת
             throw new IllegalArgumentException("Item with id " + itemId + " not found");
         }
     }

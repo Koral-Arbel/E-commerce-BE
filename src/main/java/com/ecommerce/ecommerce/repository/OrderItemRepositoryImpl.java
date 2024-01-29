@@ -2,9 +2,6 @@ package com.ecommerce.ecommerce.repository;
 
 import com.ecommerce.ecommerce.model.*;
 import com.ecommerce.ecommerce.repository.mapper.OrderItemMapper;
-import com.ecommerce.ecommerce.repository.mapper.OrderMapper;
-import com.ecommerce.ecommerce.service.ItemService;
-import com.ecommerce.ecommerce.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,24 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class OrderItemRepositoryImpl implements OrderItemRepository {
     private static final String ORDER_ITEM_TABLE_NAME = "order_item";
-    private static final String ORDER_TABLE_NAME = "orders";
-
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    OrderItemService orderItemService;
-    @Autowired
-    OrderItemMapper orderItemMapper;
-    @Autowired
-    OrderMapper orderMapper;
-    @Autowired
-    ItemService itemService;
     @Override
     public Long createOrderItem(OrderItem orderItem) {
         String sql = "INSERT INTO " + ORDER_ITEM_TABLE_NAME  + " (user_id, order_id, item_id, price, quantity) VALUES (?, ?, ?, ?, ?)";
@@ -67,8 +53,7 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
             return jdbcTemplate.query(sql, orderItemMapper, id);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("Empty Data Warning");
-            return Collections.emptyList(); // או אחרת טפל בשגיאה בדרך שמתאימה לדרישות העסקיות
-
+            return Collections.emptyList();
         }
     }
 }

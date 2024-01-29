@@ -47,21 +47,12 @@ public class UserRepositoryImpl implements UserRepository {
         if (id != null){
             CustomUser deleteCustomUser = getCustomUserById(id);
             if (deleteCustomUser != null){
-                // Delete order items associated with the user
                 String deleteOrderItemsSql = "DELETE FROM " + ORDER_ITEM_TABLE_NAME + " WHERE user_id=?";
                 jdbcTemplate.update(deleteOrderItemsSql, id);
-
-                // Delete orders associated with the user
                 String deleteOrdersSql = "DELETE FROM " + ORDER_TABLE_NAME + " WHERE user_id=?";
                 jdbcTemplate.update(deleteOrdersSql, id);
-
-
-
-                // Delete favorite items associated with the user
                 String deleteFavoriteItemsSql = "DELETE FROM " + FAVORITE_ITEM_TABLE_NAME + " WHERE user_id=?";
                 jdbcTemplate.update(deleteFavoriteItemsSql, id);
-
-                // Delete the user
                 String deleteUserSql = "DELETE FROM " + USER_TABLE_NAME + " WHERE id=?";
                 jdbcTemplate.update(deleteUserSql, id);
             } else {
@@ -91,5 +82,4 @@ public class UserRepositoryImpl implements UserRepository {
             return null;
         }
     }
-
 }
