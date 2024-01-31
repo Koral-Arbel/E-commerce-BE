@@ -79,7 +79,7 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public List<Item> searchItems(String title) {
-        String sql = "SELECT * FROM items WHERE LOWER(title) LIKE LOWER(?)";
+        String sql = "SELECT id, title, price, photo FROM item WHERE LOWER(title) LIKE LOWER(?)";
         String likeTerm = "%" + title + "%";
 
         return jdbcTemplate.query(sql, new Object[]{likeTerm}, new BeanPropertyRowMapper<>(Item.class));

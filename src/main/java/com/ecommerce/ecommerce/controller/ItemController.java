@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/item")
@@ -43,8 +42,6 @@ public class ItemController {
     @CrossOrigin
     @GetMapping(value = "/searchItems")
     public List<Item> searchItems(@RequestParam String title) {
-        return getAllItems().stream()
-                .filter(item -> item.getTitle().toLowerCase().contains(title.toLowerCase()))
-                .collect(Collectors.toList());
+        return itemService.searchItems(title);
     }
 }
