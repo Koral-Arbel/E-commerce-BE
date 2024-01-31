@@ -25,6 +25,7 @@ public class OrderDtoMapper implements RowMapper<OrderDto> {
         item.setTitle(rs.getString("title"));
         item.setPhoto(rs.getString("photo"));
         item.setPrice(rs.getDouble("price"));
+        item.setQuantity(rs.getInt("quantity"));
         item.setAvailableStock(rs.getInt("available_stock"));
 
         OrderDto orderDto = new OrderDto(order,  Arrays.asList(item));
