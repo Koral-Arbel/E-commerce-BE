@@ -6,7 +6,7 @@ import com.ecommerce.ecommerce.model.CustomerProfileResponse;
 public interface UserService {
     void createUser(CustomUser customUser) throws Exception;
     CustomUser getCustomUserById(Long id);
-    void updateCustomUserById(Long userId, CustomUser customUser);
+    void updateCustomUserById(Long id, CustomUser customUser);
     void deleteCustomUserById(Long id) throws Exception;
 
     CustomUser findUserByUsername(String username);

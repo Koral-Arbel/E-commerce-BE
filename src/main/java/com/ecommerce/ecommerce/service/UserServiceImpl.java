@@ -40,13 +40,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateCustomUserById(Long userId, CustomUser customUser) {
-        if (customUser != null) {
-            userRepository.updateCustomUserById(userId, customUser);
-        } else {
-            System.out.println("Unable to update");
+    public void updateCustomUserById(Long id, CustomUser customUser) {
+            userRepository.updateCustomUserById(id, customUser);
         }
-    }
+
 
     @Override
     public void deleteCustomUserById(Long id) throws Exception {

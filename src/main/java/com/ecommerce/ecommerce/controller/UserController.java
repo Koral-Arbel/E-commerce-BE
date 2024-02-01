@@ -17,9 +17,9 @@ public class UserController {
        userService.createUser(customUser);
     }
     @CrossOrigin
-    @PutMapping(value = "/{userId}/update")
-    public void updateCustomUser(@PathVariable Long userId, @RequestBody CustomUser customUser){
-        userService.updateCustomUserById(userId, customUser);
+    @PutMapping(value = "/update/{id}")
+    public void updateCustomUser(@PathVariable Long id, @RequestBody CustomUser customUser){
+        userService.updateCustomUserById(id, customUser);
     }
     @CrossOrigin
     @DeleteMapping(value = "/deleteUser/{userId}")

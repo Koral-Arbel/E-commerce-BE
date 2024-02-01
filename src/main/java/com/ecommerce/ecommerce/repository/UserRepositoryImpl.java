@@ -37,12 +37,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void updateCustomUserById(Long userId, CustomUser customUser) {
-        String sql = "UPDATE " + USER_TABLE_NAME + " SET first_name=?, last_name=?, email=?, phone=?, full_address=?, username=?, password=?, roles=?, permissions=? " + "WHERE id=?";
+    public void updateCustomUserById(Long id, CustomUser customUser) {
+        System.out.println("Before update: " + customUser);
+        System.out.println("Arguments: " + customUser.getFirstName() + ", " + customUser.getLastName() + ", " + customUser.getEmail() + ", " + customUser.getPhone() + ", " + customUser.getFullAddress() + ", " + customUser.getUsername() + ", " + customUser.getPassword() + ", '', '', " + customUser.getId());
+        String sql = "UPDATE " + USER_TABLE_NAME + " SET first_name=?, last_name=?, email=?, phone=?, full_address=?, username=?, password=?, roles=?, permissions=? " + " WHERE id=?";
         jdbcTemplate.update(sql, customUser.getFirstName(), customUser.getLastName(), customUser.getEmail(), customUser.getPhone(), customUser.getFullAddress(), customUser.getUsername(), customUser.getPassword(), "", "", customUser.getId());
+        System.out.println("After update: " + customUser);
+        System.out.println("Arguments: " + customUser.getFirstName() + ", " + customUser.getLastName() + ", " + customUser.getEmail() + ", " + customUser.getPhone() + ", " + customUser.getFullAddress() + ", " + customUser.getUsername() + ", " + customUser.getPassword() + ", '', '', " + customUser.getId());
+
     }
 
-    @Override
+        @Override
     public void deleteCustomUserById(Long id) throws Exception {
         if (id != null){
             CustomUser deleteCustomUser = getCustomUserById(id);
