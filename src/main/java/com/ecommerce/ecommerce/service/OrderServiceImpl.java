@@ -3,7 +3,6 @@ package com.ecommerce.ecommerce.service;
 import com.ecommerce.ecommerce.model.*;
 import com.ecommerce.ecommerce.repository.ItemRepository;
 import com.ecommerce.ecommerce.repository.OrderRepository;
-import com.ecommerce.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderItemResponse> getOrderListByUserId(Long userId) throws Exception {
+    public List<OrderItemResponse> getOrderListByUserId(Long userId) {
         List<OrderItemResponse> orderListsToResponse = new ArrayList<>();
         List<Order> openOrders = orderRepository.getOrdersByStatus(userId, OrderStatus.TEMP);
         if (openOrders != null && !openOrders.isEmpty()) {
@@ -93,13 +92,22 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void processPayment(Long orderId) {
         Order order = orderRepository.getOrderById(orderId);
-        order.setStatus(OrderStatus.CLOSE);
-        if (order.getStatus() == OrderStatus.CLOSE) {
-            List<Item> orderItems = itemRepository.getItemsByOrderId(orderId);
-            for (Item item : orderItems) {
-                itemRepository.updateAvailableStock(item.getId(), item.getAvailableStock() - 1);
+        if (order.getStatus() == OrderStatus.TEMP) {
+            List<OrderItem> orderItems = orderItemService.getAllItemsByOrderId(orderId);
+            for (OrderItem orderItem : orderItems) {
+                Item item = itemRepository.getItemById(orderItem.getItemId());
+                int orderedQuantity = orderItem.getQuantity();
+                if (item.getAvailableStock() >= orderedQuantity) {
+                    int updatedStock = item.getAvailableStock() - orderedQuantity;
+                    itemRepository.updateAvailableStock(item.getId(), updatedStock);
+                } else {
+                    System.out.println("Error: Insufficient stock for item with id " + item.getId());
+                }
             }
+            order.setStatus(OrderStatus.CLOSE);
             orderRepository.updateOrderById(order);
+        } else {
+            System.out.println("Error: Trying to process payment for an order that is not in TEMP status.");
         }
     }
 
@@ -151,30 +159,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrdersByUserId(Long id, Long userId) {
         orderRepository.deleteOrdersByUserId(id, userId);
-    }
-
-    private Double calculateTotalPrice(List<OrderItem> orderItems) {
-        double totalPrice = 0.0;
-        for (OrderItem orderItem : orderItems) {
-            totalPrice += orderItem.getQuantity() * orderItem.getPrice();
-        }
-        return totalPrice;
-    }
-
-    private void updateAvailableStock(Long itemId, Integer availableStock) {
-        Item existingItem = itemRepository.getItemById(itemId);
-        if (existingItem != null) {
-            if (availableStock < 0) {
-                throw new IllegalArgumentException("Cannot set negative stock for item with id " + itemId);
-            }
-            itemRepository.updateAvailableStock(existingItem.getId(), availableStock);
-
-            if (availableStock == 0) {
-                orderService.handleOutOfStockItem(existingItem);
-            }
-        } else {
-            throw new IllegalArgumentException("Item with id " + itemId + " not found");
-        }
     }
 }
 
